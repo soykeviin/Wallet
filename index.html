@@ -3,66 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billetera Pro - Control de Gastos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Pro Wallet - Dashboard de Gastos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #a5b4fc;
-            --secondary: #8b5cf6;
-            --secondary-dark: #7c3aed;
-            --accent: #06b6d4;
-            --success: #10b981;
-            --success-dark: #059669;
-            --danger: #ef4444;
-            --danger-dark: #dc2626;
-            --warning: #f59e0b;
-            --warning-dark: #d97706;
-            --info: #3b82f6;
-            --info-dark: #2563eb;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --white: #ffffff;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            --gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --gradient-light: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
-            
-            --border-radius: 16px;
-            --border-radius-sm: 8px;
-            --border-radius-lg: 24px;
-            --border-radius-xl: 32px;
-            
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Reset y estilos base */
         * {
             margin: 0;
             padding: 0;
@@ -70,131 +15,21 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: var(--gray-800);
-            line-height: 1.6;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            padding: 20px;
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 32px;
-            width: 100%;
-            flex: 1;
-        }
-
-        /* Header mejorado con animaciones */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
-            margin-bottom: 40px;
-            box-shadow: var(--shadow-xl);
-            padding: 32px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo i {
-            font-size: 2.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .logo h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0;
-        }
-
-        .subtitle {
-            color: var(--gray-600);
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-bottom: 50px;
-            flex: 1;
-        }
-
-        /* Stats Cards mejoradas con animaciones */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--border-radius-lg);
-            padding: 32px;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            position: relative;
-            overflow: hidden;
             animation: fadeInUp 0.8s ease-out;
-            cursor: pointer;
         }
-
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
 
         @keyframes fadeInUp {
             from {
@@ -207,462 +42,407 @@
             }
         }
 
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            position: relative;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.375rem;
+            opacity: 0.95;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-left {
+            text-align: left;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-subtitle {
+            font-size: 0.875rem;
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 0.01em;
+        }
+
+        .footer-year {
+            font-size: 0.875rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .footer-left,
+            .footer-right {
+                text-align: center;
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
         .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 6px;
-            height: 100%;
-            background: var(--gradient-primary);
-            transition: var(--transition);
-        }
-
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1));
-            border-radius: 50%;
-            transform: translate(50%, -50%);
-            transition: var(--transition);
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
-        .stat-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-2xl), var(--shadow-glow);
-        }
-
-        .stat-card:hover::before {
-            width: 8px;
-        }
-
-        .stat-card:hover::after {
-            transform: translate(30%, -30%) scale(1.2);
-        }
-
-        .stat-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: var(--border-radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            flex-shrink: 0;
-            transition: var(--transition);
-            position: relative;
-            z-index: 2;
-        }
-
-        .stat-card:nth-child(1) .stat-icon {
-            background: var(--gradient-primary);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-        }
-
-        .stat-card:nth-child(2) .stat-icon {
-            background: var(--gradient-secondary);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-        }
-
-        .stat-card:nth-child(3) .stat-icon {
-            background: var(--gradient-success);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-        }
-
-        .stat-card:hover .stat-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .stat-info {
-            flex: 1;
-        }
-
-        .stat-info h3 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 8px;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover .stat-info h3 {
-            color: var(--primary);
-        }
-
-        .stat-info p {
-            color: var(--gray-600);
-            font-weight: 600;
-            font-size: 1rem;
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #666;
             margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            line-height: 1.2;
         }
 
-        .stat-trend {
-            font-size: 0.9rem;
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .stat-change {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            line-height: 1.3;
+        }
+
+        .stat-change.positive {
+            color: #10b981;
+        }
+
+        .stat-change.negative {
+            color: #ef4444;
+        }
+
+        .stat-change .arrow {
+            margin-right: 5px;
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .expenses-table-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .trend-up {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .trend-down {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        .trend-neutral {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-        }
-
-        /* Table Container mejorado */
-        .table-container {
-            background: var(--white);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
         .table-header {
-            padding: 32px;
-            border-bottom: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 24px;
-            background: var(--gradient-light);
+            margin-bottom: 25px;
         }
 
-        .table-header h2 {
-            color: var(--gray-900);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .table-title {
             font-size: 1.5rem;
-        }
-
-        .table-header h2 i {
-            color: var(--primary);
-            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .table-controls {
             display: flex;
-            gap: 16px;
             align-items: center;
-            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.95);
+        }
+
+        .refresh-btn.loading svg {
+            animation: spin 1s linear infinite;
         }
 
         .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 20px;
-            color: var(--gray-500);
-            z-index: 1;
-            transition: var(--transition);
-        }
-
-        .search-box input {
-            padding: 16px 20px 16px 50px;
-            border: 2px solid var(--gray-200);
-            border-radius: 50px;
-            font-size: 1rem;
-            width: 300px;
-            transition: var(--transition);
-            background: var(--white);
-            position: relative;
-            font-weight: 500;
-        }
-
-        .search-box input:focus {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-            transform: scale(1.02);
+            transition: all 0.3s ease;
         }
 
-        .search-box input:focus + i {
-            color: var(--primary);
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
 
-        .btn {
-            background: var(--primary);
+        .expenses-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .expenses-table th {
+            background: linear-gradient(90deg, #667eea, #764ba2);
             color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: var(--transition);
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl), var(--shadow-glow);
-        }
-
-        .btn:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-        }
-
-        .btn-success {
-            background: var(--gradient-success);
-        }
-
-        .btn-warning {
-            background: var(--gradient-warning);
-            color: var(--dark);
-        }
-
-        .btn-info {
-            background: var(--gradient-info);
-        }
-
-        .btn-danger {
-            background: var(--gradient-danger);
-        }
-
-        /* Table mejorada */
-        .table-wrapper {
-            overflow-x: auto;
-            padding: 0 32px 32px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 24px;
-        }
-
-        thead {
-            background: var(--gray-50);
-            position: sticky;
-            top: 0;
-        }
-
-        th {
-            padding: 20px 16px;
+            padding: 15px 12px;
             text-align: left;
-            font-weight: 700;
-            color: var(--gray-700);
-            border-bottom: 2px solid var(--gray-200);
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            transition: var(--transition);
+            letter-spacing: 0.08em;
+            line-height: 1.2;
         }
 
-        th:hover {
-            background: var(--gray-100);
-            color: var(--primary);
+        .expenses-table th:first-child {
+            border-radius: 10px 0 0 10px;
         }
 
-        td {
-            padding: 20px 16px;
-            border-bottom: 1px solid var(--gray-100);
-            color: var(--gray-700);
-            font-size: 1rem;
-            transition: var(--transition);
+        .expenses-table th:last-child {
+            border-radius: 0 10px 10px 0;
         }
 
-        tbody tr {
-            transition: var(--transition);
-            animation: fadeInRow 0.6s ease-out;
+        .expenses-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            line-height: 1.4;
+            transition: all 0.3s ease;
         }
 
-        @keyframes fadeInRow {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .expenses-table tr:hover td {
+            background-color: #f8fafc;
         }
 
-        tbody tr:hover {
-            background: var(--gray-50);
-            transform: scale(1.01);
-            box-shadow: var(--shadow-md);
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .badge {
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.8rem;
-            font-weight: 700;
+        .category-tag {
             display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
+            letter-spacing: 0.05em;
+            line-height: 1.2;
         }
 
-        .badge:hover {
-            transform: scale(1.05);
+        .category-alimentacion { background: #fef3c7; color: #92400e; }
+        .category-transporte { background: #dbeafe; color: #1e40af; }
+        .category-entretenimiento { background: #fce7f3; color: #be185d; }
+        .category-servicios { background: #d1fae5; color: #065f46; }
+        .category-compras { background: #e0e7ff; color: #3730a3; }
+        .category-otros { background: #f3f4f6; color: #374151; }
+
+        .amount {
+            font-weight: 600;
+            color: #ef4444;
+            letter-spacing: -0.01em;
         }
 
-        .badge-success {
-            background: var(--gradient-success);
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        .chart-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
-        .badge-warning {
-            background: var(--gradient-warning);
-            color: var(--dark);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-info {
-            background: var(--gradient-info);
-            color: white;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .badge-danger {
-            background: var(--gradient-danger);
-            color: white;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        /* Colores específicos para cada categoría */
-        .badge-comida {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .badge-suscripcion {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-        }
-
-        .badge-tienda {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-combustible {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        .badge-salud {
-            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-        }
-
-        .badge-entretenimiento {
-            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-        }
-
-        .badge-gasto {
-            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
-        }
-
-        /* Badges para métodos de pago */
-        .badge-tarjeta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-efectivo {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .badge-tarjeta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
-        }
-
-        .badge-efectivo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        /* Loading mejorado */
-        .loading {
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
             text-align: center;
-            padding: 80px 20px;
-            color: var(--gray-600);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        .chart {
+            height: 300px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 20px 0;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: slideUp 1s ease-out;
+        }
+
+        .chart-bar:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes slideUp {
+            from {
+                height: 0 !important;
+            }
+        }
+
+        .chart-bar::before {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #333;
+            letter-spacing: -0.01em;
+        }
+
+        .chart-label {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid var(--gray-200);
-            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 24px;
         }
 
         @keyframes spin {
@@ -670,987 +450,578 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* No Data mejorado */
-        .no-data {
-            text-align: center;
-            padding: 80px 20px;
-            color: var(--gray-500);
-        }
-
-        .no-data i {
-            font-size: 4rem;
-            margin-bottom: 24px;
-            opacity: 0.6;
-            color: var(--gray-400);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* Footer mejorado */
-        .footer {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--gray-600);
-            font-size: 1rem;
-            background: var(--white);
-            margin-top: auto;
-            border-top: 1px solid var(--gray-200);
-            animation: fadeInUp 0.8s ease-out 0.6s both;
-        }
-
-        .developer {
-            font-weight: 600;
-            color: var(--primary);
-            margin-top: 8px;
-        }
-
-        /* Responsive Design mejorado */
-        @media (min-width: 1400px) {
-            .container {
-                padding: 0 48px;
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
             }
             
-            .stats-container {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 40px;
-            }
-            
-            .stat-card {
-                padding: 40px;
-            }
-            
-            .stat-icon {
-                width: 90px;
-                height: 90px;
-                font-size: 2.2rem;
-            }
-            
-            .stat-info h3 {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .container {
-                padding: 0 24px;
-            }
-            
-            .stats-container {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 24px;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .stats-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-            }
-            
-            .table-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .table-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .search-box input {
-                width: 100%;
-                max-width: 400px;
+            .header h1 {
+                font-size: 3rem;
             }
         }
 
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-            
-            .logo {
-                justify-content: center;
-            }
-            
-            .stats-container {
+            .stats-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
-            .stat-card {
-                padding: 24px;
-            }
-            
-            .table-header {
-                padding: 24px;
-            }
-            
-            .table-controls {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 16px;
-            }
-            
-            .search-box input {
-                width: 100%;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .table-wrapper {
-                padding: 0 24px 24px;
-            }
-            
-            th, td {
-                padding: 16px 12px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .container {
-                padding: 0 16px;
-            }
-            
-            .header {
-                padding: 24px 0;
-                margin-bottom: 24px;
-            }
-            
-            .logo h1 {
-                font-size: 1.8rem;
-            }
-            
-            .logo i {
-                font-size: 2rem;
-            }
-            
-            .stat-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-            
-            .stat-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 1.8rem;
-            }
-            
-            .table-header h2 {
-                font-size: 1.3rem;
-            }
-            
-            th, td {
-                font-size: 0.9rem;
-                padding: 12px 8px;
-            }
-            
-            .badge {
-                padding: 6px 12px;
+            .expenses-table {
                 font-size: 0.75rem;
             }
-        }
-
-        /* Utilidades */
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .d-none { display: none; }
-        .d-flex { display: flex; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-3 { gap: 1rem; }
-        
-        /* Scrollbar personalizado mejorado */
-        .table-wrapper::-webkit-scrollbar {
-            height: 12px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-track {
-            background: var(--gray-100);
-            border-radius: 6px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: var(--gradient-primary);
-            border-radius: 6px;
-            border: 2px solid var(--white);
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+            
+            .expenses-table th,
+            .expenses-table td {
+                padding: 10px 8px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+                letter-spacing: -0.02em;
+            }
+            
+            .header .subtitle {
+                font-size: 1.125rem;
+            }
         }
     </style>
 </head>
 <body>
+    <br>
     <div class="container">
-        <!-- Header mejorado -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-wallet"></i>
-                    <div>
-                        <h1>Billetera Pro</h1>
-                        <p class="subtitle">Control Avanzado de Gastos y Finanzas</p>
-                    </div>
-                </div>
-                <div class="d-none d-md-flex">
-                    <button class="btn btn-primary" id="add-expense-btn">
-                        <i class="fas fa-plus"></i> Nuevo Gasto
-                    </button>
+        <div class="header">
+            <h1>PRO WALLET </h1>
+            <p class="subtitle">Tu dashboard profesional de gastos personales</p>
+            <div id="connection-status" style="margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 20px; display: inline-block; font-size: 0.9rem;">
+                <span id="status-text">Conectando a Google Sheets...</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Gasto Total</h3>
+                <div class="stat-value" id="total-expenses">$0</div>
+                <div class="stat-change" id="total-change">
+                    <span class="arrow">→</span>
+                    Calculando...
                 </div>
             </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Stats Cards mejoradas -->
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-receipt"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="total-gastos">$0</h3>
-                        <p>Total de Gastos</p>
-                        <div class="stat-trend trend-neutral">
-                            <i class="fas fa-arrow-right"></i> <span>0% desde el mes pasado</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="total-tarjeta">$0</h3>
-                        <p>Gastos con Tarjeta</p>
-                        <div class="stat-trend trend-neutral">
-                            <i class="fas fa-arrow-right"></i> <span>0% desde el mes pasado</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="total-transacciones">0</h3>
-                        <p>Transacciones Totales</p>
-                        <div class="stat-trend trend-neutral">
-                            <i class="fas fa-arrow-right"></i> <span>0% desde el mes pasado</span>
-                        </div>
-                    </div>
+            <div class="stat-card">
+                <h3>Gasto del Mes</h3>
+                <div class="stat-value" id="month-expenses">$0</div>
+                <div class="stat-change" id="month-change">
+                    <span class="arrow">→</span>
+                    Calculando...
                 </div>
             </div>
+            <div class="stat-card">
+                <h3>Promedio Diario</h3>
+                <div class="stat-value" id="daily-average">$0</div>
+                <div class="stat-change" id="daily-change">
+                    <span class="arrow">→</span>
+                    Este mes
+                </div>
+            </div>
+        </div>
 
-            <!-- Table Container mejorado -->
-            <div class="table-container">
+        <div class="main-content">
+            <div class="expenses-table-container">
                 <div class="table-header">
-                    <h2><i class="fas fa-table"></i> Registro de Gastos</h2>
+                    <h2 class="table-title">Últimos Gastos</h2>
                     <div class="table-controls">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" placeholder="Buscar transacciones...">
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-primary" id="refresh-btn">
-                                <i class="fas fa-sync-alt"></i> Actualizar
-                            </button>
-                            <button class="btn btn-success" id="export-btn" style="display: none;">
-                                <i class="fas fa-download"></i> Exportar
-                            </button>
-                            
-                        </div>
+                        <button class="refresh-btn" id="refresh-btn" title="Actualizar datos">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                <path d="M21 3v5h-5"/>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                <path d="M3 21v-5h5"/>
+                            </svg>
+                        </button>
+                        <input type="text" class="search-box" id="search-input" placeholder="Buscar gastos...">
                     </div>
                 </div>
-                
-                <div class="table-wrapper">
-                    <table id="expenses-table">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Fecha</th>
-                                <th>Precio (Gs)</th>
-                                <th>Método de Pago</th>
-                                <th>Categoría</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <!-- Los datos se cargarán dinámicamente -->
-                        </tbody>
-                    </table>
-                </div>
-                
                 <div class="loading" id="loading">
                     <div class="spinner"></div>
-                    <p>Cargando datos financieros...</p>
                 </div>
-                
-                <div class="no-data" id="no-data" style="display: none;">
-                    <i class="fas fa-inbox"></i>
-                    <p>No hay datos disponibles</p>
-                    <p class="mt-1">Agrega tu primer gasto para comenzar</p>
+                <table class="expenses-table" id="expenses-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio (Gs)</th>
+                            <th>Forma de Pago</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenses-tbody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Gastos por Categoría</h3>
+                <div class="chart" id="category-chart">
                 </div>
             </div>
-        </main>
-
-        <!-- Footer mejorado -->
-        <footer class="footer">
-            <p>&copy; 2025 Billetera Pro - Sistema de Control de Gastos</p>
-            <p class="developer">Desarrollado por Kev</p>
-        </footer>
+        </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-title">Pro Wallet</div>
+                <div class="footer-subtitle">Dashboard profesional de gastos personales</div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-year">© 2025 Desarrollado por KEV</div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Configuración de la aplicación
-        const CONFIG = {
-            GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg/edit?usp=sharing',
-            SHEET_ID: '1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg',
-            SHEET_NAME: 'Sheet1'
-        };
+        // Configuración de Google Sheets
+        const GOOGLE_SHEET_ID = '1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg';
+        const GOOGLE_SHEET_NAME = 'Sheet1';
+        
+        // Datos de ejemplo en Guaraníes (fallback si no se puede conectar a Google Sheets)
+        const sampleData = [
+            { fecha: '2024-08-20', descripcion: 'Supermercado Stock', categoria: 'Alimentación', monto: 285000 },
+            { fecha: '2024-08-19', descripcion: 'Uber', categoria: 'Transporte', monto: 45000 },
+            { fecha: '2024-08-18', descripcion: 'Netflix', categoria: 'Entretenimiento', monto: 89000 },
+            { fecha: '2024-08-17', descripcion: 'ANDE - Electricidad', categoria: 'Servicios', monto: 320000 },
+            { fecha: '2024-08-16', descripcion: 'Restaurante El Bolsi', categoria: 'Alimentación', monto: 125000 },
+            { fecha: '2024-08-15', descripcion: 'Combustible Copetrol', categoria: 'Transporte', monto: 180000 },
+            { fecha: '2024-08-14', descripcion: 'MercadoLibre', categoria: 'Compras', monto: 350000 },
+            { fecha: '2024-08-13', descripcion: 'Café Martinez', categoria: 'Alimentación', monto: 25000 },
+            { fecha: '2024-08-12', descripcion: 'Cine Showcase', categoria: 'Entretenimiento', monto: 65000 },
+            { fecha: '2024-08-11', descripcion: 'Farmacia Catedral', categoria: 'Otros', monto: 95000 },
+            { fecha: '2024-08-10', descripcion: 'Tigo Money', categoria: 'Servicios', monto: 15000 },
+            { fecha: '2024-08-09', descripcion: 'Real Supermercado', categoria: 'Alimentación', monto: 225000 },
+            { fecha: '2024-07-28', descripcion: 'Gasolina Shell', categoria: 'Transporte', monto: 175000 },
+            { fecha: '2024-07-25', descripcion: 'Personal Internet', categoria: 'Servicios', monto: 155000 },
+            { fecha: '2024-07-20', descripcion: 'Pizzería Don Vito', categoria: 'Alimentación', monto: 185000 },
+            { fecha: '2024-07-18', descripcion: 'Shopping del Sol', categoria: 'Compras', monto: 425000 },
+            { fecha: '2024-07-15', descripcion: 'Agua ESSAP', categoria: 'Servicios', monto: 85000 },
+            { fecha: '2024-07-12', descripcion: 'Uber Eats', categoria: 'Alimentación', monto: 75000 },
+            { fecha: '2024-07-10', descripcion: 'Claro TV', categoria: 'Servicios', monto: 125000 },
+            { fecha: '2024-07-08', descripcion: 'Farmacia San Roque', categoria: 'Otros', monto: 55000 }
+        ];
 
-        // Estado global de la aplicación
-        let expensesData = [];
-        let filteredData = [];
-
-        // Elementos del DOM
-        const elements = {
-            tableBody: document.getElementById('table-body'),
-            loading: document.getElementById('loading'),
-            noData: document.getElementById('no-data'),
-            searchInput: document.getElementById('search-input'),
-            refreshBtn: document.getElementById('refresh-btn'),
-            exportBtn: document.getElementById('export-btn'),
-            
-            totalGastos: document.getElementById('total-gastos'),
-            totalTarjeta: document.getElementById('total-tarjeta'),
-            totalTransacciones: document.getElementById('total-transacciones'),
-            addExpenseBtn: document.getElementById('add-expense-btn')
-        };
-
-        // Inicialización de la aplicación
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-            setupEventListeners();
-        });
-
-        // Configurar event listeners
-        function setupEventListeners() {
-            elements.searchInput.addEventListener('input', handleSearch);
-            elements.refreshBtn.addEventListener('click', loadData);
-            elements.exportBtn.addEventListener('click', exportToCSV);
-            
-            elements.addExpenseBtn.addEventListener('click', addNewExpense);
-        }
-
-        // Inicializar la aplicación
-        function initializeApp() {
-            showLoading();
-            loadData();
-        }
-
-        // Cargar datos desde Google Sheets
-        async function loadData() {
-            try {
-                showLoading();
-                
-                // Cargar datos reales de Google Sheets
-                const data = await fetchGoogleSheetsData();
-                
-                if (data && data.length > 0) {
-                    expensesData = data;
-                    filteredData = [...data];
-                    renderTable();
-                    updateStats();
-                    hideLoading();
-                } else {
-                    // Si no hay datos, mostrar mensaje apropiado
-                    showNoData();
-                }
-            } catch (error) {
-                console.error('Error al cargar datos:', error);
-                showNoData();
+        class ProWallet {
+            constructor() {
+                this.data = [];
+                this.filteredData = [];
+                this.init();
             }
-        }
 
-        // Intentar obtener datos de Google Sheets
-        async function fetchGoogleSheetsData() {
-            try {
-                // Intentar múltiples formatos de URL para Google Sheets
-                const urls = [
-                    // URL de publicación directa (recomendada)
-                    'https://docs.google.com/spreadsheets/d/1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg/pub?gid=0&single=true&output=csv',
-                    // URL alternativa
-                    'https://docs.google.com/spreadsheets/d/1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg/export?gid=0&format=csv',
-                    // URL de edición convertida
-                    CONFIG.GOOGLE_SHEETS_URL.replace('/edit?usp=sharing', '/pub?gid=0&single=true&output=csv')
-                ];
-                
-                for (let i = 0; i < urls.length; i++) {
-                    try {
-                        console.log(`Intentando URL ${i + 1}:`, urls[i]);
+            async init() {
+                try {
+                    // Simular carga de datos
+                    await this.loadData();
+                    this.renderStats();
+                    this.renderTable();
+                    this.renderChart();
+                    this.setupEventListeners();
+                } catch (error) {
+                    console.error('Error initializing Pro Wallet:', error);
+                }
+            }
+
+            async loadData() {
+                try {
+                    // Actualizar estado de conexión
+                    this.updateConnectionStatus('Conectando a Google Sheets...', 'connecting');
+                    
+                    // Intentar cargar datos desde Google Sheets
+                    const sheetData = await this.fetchGoogleSheetsData();
+                    
+                    if (sheetData && sheetData.length > 0) {
+                        this.data = sheetData.map(item => ({
+                            ...item,
+                            fecha: new Date(item.fecha),
+                            monto: parseFloat(item.monto)
+                        })).sort((a, b) => b.fecha - a.fecha);
                         
-                        const response = await fetch(urls[i]);
-                        if (response.ok) {
-                            const csvText = await response.text();
-                            console.log('Datos CSV recibidos:', csvText.substring(0, 200) + '...');
-                            
-                            const parsedData = parseCSV(csvText);
-                            console.log('Datos parseados:', parsedData.length, 'filas');
-                            
-                            return parsedData;
-                        }
-                    } catch (urlError) {
-                        console.warn(`Error con URL ${i + 1}:`, urlError);
-                        continue;
+                        console.log('Datos cargados desde Google Sheets:', this.data.length, 'registros');
+                        this.updateConnectionStatus(`✅ Conectado a Google Sheets (${this.data.length} registros)`, 'connected');
+                    } else {
+                        // Fallback a datos de ejemplo
+                        this.data = sampleData.map(item => ({
+                            ...item,
+                            fecha: new Date(item.fecha),
+                            monto: parseFloat(item.monto)
+                        })).sort((a, b) => b.fecha - a.fecha);
+                        
+                        console.log('Usando datos de ejemplo (fallback)');
+                        this.updateConnectionStatus('⚠️ Usando datos de ejemplo (Sheet vacío)', 'warning');
                     }
-                }
-                
-                throw new Error('No se pudo acceder a ninguna URL de Google Sheets');
-            } catch (error) {
-                console.error('Error al cargar datos de Google Sheets:', error);
-                return null;
-            }
-        }
-
-        // Parsear CSV a array de objetos
-        function parseCSV(csvText) {
-            const lines = csvText.trim().split('\n');
-            if (lines.length < 2) {
-                console.warn('CSV vacío o sin datos');
-                return [];
-            }
-            
-            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-            console.log('Columnas detectadas:', headers);
-            
-            const data = [];
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-                
-                // Solo procesar filas que tengan al menos un valor no vacío en las primeras columnas
-                if (values.length > 0 && values.slice(0, 3).some(v => v !== '')) {
-                    const row = {};
-                    headers.forEach((header, index) => {
-                        row[header] = values[index] || '';
-                    });
-                    data.push(row);
-                }
-            }
-            
-            console.log('Filas procesadas:', data.length);
-            return data;
-        }
-
-        // Renderizar la tabla
-        function renderTable() {
-            if (filteredData.length === 0) {
-                showNoData();
-                elements.exportBtn.style.display = 'none';
-                return;
-            }
-            
-            const tableHTML = filteredData.map((row, index) => `
-                <tr style="animation-delay: ${index * 0.1}s;">
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary);"></div>
-                            <strong>${capitalizeFirstLetter(escapeHtml(row['Producto'] || ''))}</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <span style="font-weight: 500; color: var(--gray-700);">
-                            ${formatDate(row['Fecha'] || '')}
-                        </span>
-                    </td>
-                    <td>
-                        <span style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">
-                            ${formatPrice(row['Precio-Gs'] || '0')}
-                        </span>
-                    </td>
-                                                                                                        <td>
-                          ${row['Tarjeta'] || 'EFECTIVO'}
-                      </td>
-                                         <td>
-                         <span class="badge badge-${getCategoryClass(row['Producto'] || '')}">
-                             <i class="fas fa-${getCategoryIcon(row['Producto'] || '')}" style="margin-right: 6px;"></i>
-                             ${getCategoryFromProduct(row['Producto'] || '')}
-                         </span>
-                     </td>
                     
-                </tr>
-            `).join('');
-            
-            elements.tableBody.innerHTML = tableHTML;
-            elements.noData.style.display = 'none';
-            elements.exportBtn.style.display = 'flex';
-        }
-
-        // Obtener categoría basada en el producto según tu Excel
-        function getCategoryFromProduct(product) {
-            const productLower = product.toLowerCase();
-            
-            // Comida → restaurantes, snacks, bebidas, supermercado, delivery
-            if (productLower.includes('restaurante') || productLower.includes('snack') || 
-                productLower.includes('bebida') || productLower.includes('supermercado') || 
-                productLower.includes('delivery') || productLower.includes('comida') ||
-                productLower.includes('cena') || productLower.includes('almuerzo') ||
-                productLower.includes('pizza') || productLower.includes('hamburguesa')) {
-                return 'Comida';
-            }
-            
-            // Suscripción → Netflix, Spotify, servicios digitales recurrentes
-            else if (productLower.includes('netflix') || productLower.includes('spotify') || 
-                     productLower.includes('suscripción') || productLower.includes('servicio digital') ||
-                     productLower.includes('streaming') || productLower.includes('app')) {
-                return 'Suscripción';
-            }
-            
-            // Tienda → ropa, electrónicos, artículos del hogar, compras generales
-            else if (productLower.includes('ropa') || productLower.includes('zapato') || 
-                     productLower.includes('electrónico') || productLower.includes('hogar') ||
-                     productLower.includes('tienda') || productLower.includes('moda') ||
-                     productLower.includes('accesorio')) {
-                return 'Tienda';
-            }
-            
-            // Combustible → nafta, diésel, carga de vehículo
-            else if (productLower.includes('nafta') || productLower.includes('diésel') || 
-                     productLower.includes('combustible') || productLower.includes('gasolina') ||
-                     productLower.includes('carga') || productLower.includes('vehículo') ||
-                     productLower.includes('auto') || productLower.includes('transporte')) {
-                return 'Combustible';
-            }
-            
-            // Salud → medicamentos, médicos, farmacia
-            else if (productLower.includes('medicamento') || productLower.includes('médico') || 
-                     productLower.includes('farmacia') || productLower.includes('salud') ||
-                     productLower.includes('consulta') || productLower.includes('tratamiento')) {
-                return 'Salud';
-            }
-            
-            // Entretenimiento → cine, conciertos, eventos, juegos
-            else if (productLower.includes('cine') || productLower.includes('concierto') || 
-                     productLower.includes('evento') || productLower.includes('juego') ||
-                     productLower.includes('entretenimiento') || productLower.includes('película')) {
-                return 'Entretenimiento';
-            }
-            
-            // Gasto → cualquier gasto que no encaje en las categorías anteriores
-            else {
-                return 'Gasto';
-            }
-        }
-
-        // Obtener icono de categoría según tu Excel
-        function getCategoryIcon(product) {
-            const productLower = product.toLowerCase();
-            
-            // Comida → restaurantes, snacks, bebidas, supermercado, delivery
-            if (productLower.includes('restaurante') || productLower.includes('snack') || 
-                productLower.includes('bebida') || productLower.includes('supermercado') || 
-                productLower.includes('delivery') || productLower.includes('comida') ||
-                productLower.includes('cena') || productLower.includes('almuerzo') ||
-                productLower.includes('pizza') || productLower.includes('hamburguesa')) {
-                return 'utensils';
-            }
-            
-            // Suscripción → Netflix, Spotify, servicios digitales recurrentes
-            else if (productLower.includes('netflix') || productLower.includes('spotify') || 
-                     productLower.includes('suscripción') || productLower.includes('servicio digital') ||
-                     productLower.includes('streaming') || productLower.includes('app')) {
-                return 'play-circle';
-            }
-            
-            // Tienda → ropa, electrónicos, artículos del hogar, compras generales
-            else if (productLower.includes('ropa') || productLower.includes('zapato') || 
-                     productLower.includes('electrónico') || productLower.includes('hogar') ||
-                     productLower.includes('tienda') || productLower.includes('moda') ||
-                     productLower.includes('accesorio')) {
-                return 'shopping-bag';
-            }
-            
-            // Combustible → nafta, diésel, carga de vehículo
-            else if (productLower.includes('nafta') || productLower.includes('diésel') || 
-                     productLower.includes('combustible') || productLower.includes('gasolina') ||
-                     productLower.includes('carga') || productLower.includes('vehículo') ||
-                     productLower.includes('auto') || productLower.includes('transporte')) {
-                return 'gas-pump';
-            }
-            
-            // Salud → medicamentos, médicos, farmacia
-            else if (productLower.includes('medicamento') || productLower.includes('médico') || 
-                     productLower.includes('farmacia') || productLower.includes('salud') ||
-                     productLower.includes('consulta') || productLower.includes('tratamiento')) {
-                return 'heartbeat';
-            }
-            
-            // Entretenimiento → cine, conciertos, eventos, juegos
-            else if (productLower.includes('cine') || productLower.includes('concierto') || 
-                     productLower.includes('evento') || productLower.includes('juego') ||
-                     productLower.includes('entretenimiento') || productLower.includes('película')) {
-                return 'film';
-            }
-            
-            // Gasto → cualquier gasto que no encaje en las categorías anteriores
-            else {
-                return 'tag';
-            }
-        }
-
-        // Formatear fecha de manera más legible
-        function formatDate(dateString) {
-            if (!dateString) return 'N/A';
-            
-            try {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return dateString;
-                
-                const options = { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric',
-                    weekday: 'short'
-                };
-                
-                return date.toLocaleDateString('es-ES', options);
-            } catch (error) {
-                return dateString;
-            }
-        }
-
-        // Capitalizar primera letra de cada palabra
-        function capitalizeFirstLetter(text) {
-            if (!text) return '';
-            return text.split(' ').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            ).join(' ');
-        }
-
-        // Obtener clase CSS para el badge de categoría
-        function getCategoryClass(product) {
-            const productLower = product.toLowerCase();
-            
-            // Comida → restaurantes, snacks, bebidas, supermercado, delivery
-            if (productLower.includes('restaurante') || productLower.includes('snack') || 
-                productLower.includes('bebida') || productLower.includes('supermercado') || 
-                productLower.includes('delivery') || productLower.includes('comida') ||
-                productLower.includes('cena') || productLower.includes('almuerzo') ||
-                productLower.includes('pizza') || productLower.includes('hamburguesa')) {
-                return 'comida';
-            }
-            
-            // Suscripción → Netflix, Spotify, servicios digitales recurrentes
-            else if (productLower.includes('netflix') || productLower.includes('spotify') || 
-                     productLower.includes('suscripción') || productLower.includes('servicio digital') ||
-                     productLower.includes('streaming') || productLower.includes('app')) {
-                return 'suscripcion';
-            }
-            
-            // Tienda → ropa, electrónicos, artículos del hogar, compras generales
-            else if (productLower.includes('ropa') || productLower.includes('zapato') || 
-                     productLower.includes('electrónico') || productLower.includes('hogar') ||
-                     productLower.includes('tienda') || productLower.includes('moda') ||
-                     productLower.includes('accesorio')) {
-                return 'tienda';
-            }
-            
-            // Combustible → nafta, diésel, carga de vehículo
-            else if (productLower.includes('nafta') || productLower.includes('diésel') || 
-                     productLower.includes('combustible') || productLower.includes('gasolina') ||
-                     productLower.includes('carga') || productLower.includes('vehículo') ||
-                     productLower.includes('auto') || productLower.includes('transporte')) {
-                return 'combustible';
-            }
-            
-            // Salud → medicamentos, médicos, farmacia
-            else if (productLower.includes('medicamento') || productLower.includes('médico') || 
-                     productLower.includes('farmacia') || productLower.includes('salud') ||
-                     productLower.includes('consulta') || productLower.includes('tratamiento')) {
-                return 'salud';
-            }
-            
-            // Entretenimiento → cine, conciertos, eventos, juegos
-            else if (productLower.includes('cine') || productLower.includes('concierto') || 
-                     productLower.includes('evento') || productLower.includes('juego') ||
-                     productLower.includes('entretenimiento') || productLower.includes('película')) {
-                return 'entretenimiento';
-            }
-            
-            // Gasto → cualquier gasto que no encaje en las categorías anteriores
-            else {
-                return 'gasto';
-            }
-        }
-
-        // Actualizar estadísticas
-        function updateStats() {
-            const totalGastos = expensesData.reduce((sum, row) => {
-                const precio = parseInt(row['Precio-Gs'] || '0') || 0;
-                return sum + precio;
-            }, 0);
-            
-            const totalTarjeta = expensesData.reduce((sum, row) => {
-                if (row['Tarjeta'] && row['Tarjeta'].toLowerCase().includes('crédito')) {
-                    const precio = parseInt(row['Precio-Gs'] || '0') || 0;
-                    return sum + precio;
-                }
-                return sum;
-            }, 0);
-            
-            const totalTransacciones = expensesData.length;
-            
-            // Calcular porcentajes reales
-            const percentages = calculateRealPercentages();
-            
-            // Actualizar valores
-            elements.totalGastos.textContent = formatPrice(totalGastos.toString());
-            elements.totalTarjeta.textContent = formatPrice(totalTarjeta.toString());
-            elements.totalTransacciones.textContent = totalTransacciones.toLocaleString();
-            
-            // Actualizar porcentajes en las tarjetas
-            updateStatTrends(percentages);
-        }
-
-        // Actualizar las tendencias de las estadísticas
-        function updateStatTrends(percentages) {
-            const statCards = document.querySelectorAll('.stat-card');
-            
-            // Primera tarjeta - Total Gastos
-            const gastosTrend = statCards[0].querySelector('.stat-trend');
-            if (gastosTrend) {
-                gastosTrend.className = `stat-trend ${percentages.gastos > 0 ? 'trend-up' : percentages.gastos < 0 ? 'trend-down' : 'trend-neutral'}`;
-                gastosTrend.innerHTML = `
-                    <i class="fas fa-arrow-${percentages.gastos > 0 ? 'up' : percentages.gastos < 0 ? 'down' : 'right'}"></i> 
-                    <span>${Math.abs(percentages.gastos)}% desde el mes pasado</span>
-                `;
-            }
-            
-            // Segunda tarjeta - Gastos con Tarjeta
-            const tarjetaTrend = statCards[1].querySelector('.stat-trend');
-            if (tarjetaTrend) {
-                tarjetaTrend.className = `stat-trend ${percentages.tarjeta > 0 ? 'trend-up' : percentages.tarjeta < 0 ? 'trend-down' : 'trend-neutral'}`;
-                tarjetaTrend.innerHTML = `
-                    <i class="fas fa-arrow-${percentages.tarjeta > 0 ? 'up' : percentages.tarjeta < 0 ? 'down' : 'right'}"></i> 
-                    <span>${Math.abs(percentages.tarjeta)}% desde el mes pasado</span>
-                `;
-            }
-            
-            // Tercera tarjeta - Transacciones
-            const transaccionesTrend = statCards[2].querySelector('.stat-trend');
-            if (transaccionesTrend) {
-                transaccionesTrend.className = `stat-trend ${percentages.transacciones > 0 ? 'trend-up' : percentages.transacciones < 0 ? 'down' : 'trend-neutral'}`;
-                transaccionesTrend.innerHTML = `
-                    <i class="fas fa-arrow-${percentages.transacciones > 0 ? 'up' : percentages.transacciones < 0 ? 'down' : 'right'}"></i> 
-                    <span>${Math.abs(percentages.transacciones)}% desde el mes pasado</span>
-                `;
-            }
-        }
-
-        // Manejar búsqueda
-        function handleSearch() {
-            const searchTerm = elements.searchInput.value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                filteredData = [...expensesData];
-            } else {
-                filteredData = expensesData.filter(row => {
-                    const producto = (row['Producto'] || '').toLowerCase();
-                    const tarjeta = (row['Tarjeta'] || '').toLowerCase();
-                    const fecha = (row['Fecha'] || '').toLowerCase();
+                    this.filteredData = [...this.data];
                     
-                    return producto.includes(searchTerm) || 
-                           tarjeta.includes(searchTerm) || 
-                           fecha.includes(searchTerm);
+                    // Ocultar loading
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('expenses-table').style.display = 'table';
+                    
+                } catch (error) {
+                    console.error('Error cargando datos:', error);
+                    
+                    // Fallback a datos de ejemplo en caso de error
+                    this.data = sampleData.map(item => ({
+                        ...item,
+                        fecha: new Date(item.fecha),
+                        monto: parseFloat(item.monto)
+                    })).sort((a, b) => b.fecha - a.fecha);
+                    
+                    this.filteredData = [...this.data];
+                    
+                    // Ocultar loading
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('expenses-table').style.display = 'table';
+                    
+                    this.updateConnectionStatus('❌ Error de conexión - Usando datos de ejemplo', 'error');
+                    this.showNotification('Error al cargar datos de Google Sheets. Usando datos de ejemplo.', 'error');
+                }
+            }
+
+            renderStats() {
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+                const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+                // Calcular gastos totales
+                const totalExpenses = this.data.reduce((sum, item) => sum + item.monto, 0);
+                
+                // Calcular gastos del mes actual
+                const currentMonthExpenses = this.data
+                    .filter(item => item.fecha.getMonth() === currentMonth && item.fecha.getFullYear() === currentYear)
+                    .reduce((sum, item) => sum + item.monto, 0);
+                
+                // Calcular gastos del mes pasado
+                const lastMonthExpenses = this.data
+                    .filter(item => item.fecha.getMonth() === lastMonth && item.fecha.getFullYear() === lastMonthYear)
+                    .reduce((sum, item) => sum + item.monto, 0);
+
+                // Calcular cambio porcentual
+                const monthChange = lastMonthExpenses > 0 
+                    ? ((currentMonthExpenses - lastMonthExpenses) / lastMonthExpenses * 100).toFixed(1)
+                    : 0;
+
+                // Calcular promedio diario
+                const currentMonthDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const daysPassed = now.getDate();
+                const dailyAverage = daysPassed > 0 ? (currentMonthExpenses / daysPassed).toFixed(2) : 0;
+
+                // Actualizar UI con formato de Guaraníes
+                document.getElementById('total-expenses').textContent = `₲${this.formatGuaranies(totalExpenses)}`;
+                document.getElementById('month-expenses').textContent = `₲${this.formatGuaranies(currentMonthExpenses)}`;
+                document.getElementById('daily-average').textContent = `₲${this.formatGuaranies(dailyAverage)}`;
+
+                // Actualizar cambios
+                const totalChangeEl = document.getElementById('total-change');
+                totalChangeEl.innerHTML = `<span class="arrow">💰</span>Todos los gastos`;
+
+                const monthChangeEl = document.getElementById('month-change');
+                const isPositive = monthChange >= 0;
+                monthChangeEl.className = `stat-change ${isPositive ? 'negative' : 'positive'}`;
+                monthChangeEl.innerHTML = `
+                    <span class="arrow">${isPositive ? '📈' : '📉'}</span>
+                    ${isPositive ? '+' : ''}${monthChange}% vs mes pasado
+                `;
+
+                const dailyChangeEl = document.getElementById('daily-change');
+                dailyChangeEl.innerHTML = `<span class="arrow">📊</span>Últimos ${daysPassed} días`;
+            }
+
+            formatGuaranies(amount) {
+                return new Intl.NumberFormat('es-PY', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            }
+
+            async refreshData() {
+                const refreshBtn = document.getElementById('refresh-btn');
+                refreshBtn.classList.add('loading');
+                refreshBtn.disabled = true;
+
+                try {
+                    // Recargar datos desde Google Sheets
+                    await this.loadData();
+                    this.renderStats();
+                    this.renderTable();
+                    this.renderChart();
+                    
+                    // Mostrar notificación de éxito
+                    this.showNotification('Datos actualizados correctamente desde Google Sheets', 'success');
+                } catch (error) {
+                    console.error('Error actualizando datos:', error);
+                    this.showNotification('Error al actualizar los datos', 'error');
+                } finally {
+                    refreshBtn.classList.remove('loading');
+                    refreshBtn.disabled = false;
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    animation: slideInRight 0.3s ease-out;
+                `;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            renderTable() {
+                const tbody = document.getElementById('expenses-tbody');
+                tbody.innerHTML = '';
+
+                this.filteredData.slice(0, 20).forEach(expense => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${expense.fecha.toLocaleDateString('es-PY')}</td>
+                        <td>${expense.producto || expense.descripcion || 'N/A'}</td>
+                        <td><span class="category-tag category-${(expense.categoria || 'otros').toLowerCase().replace('ó', 'o').replace('í', 'i').replace(' ', '-')}">${expense.categoria || 'Sin categoría'}</span></td>
+                        <td class="amount">₲${this.formatGuaranies(expense.monto)}</td>
+                        <td>${expense.formaPago || 'N/A'}</td>
+                        <td>${expense.hora || 'N/A'}</td>
+                    `;
+                    tbody.appendChild(row);
                 });
             }
-            
-            renderTable();
-        }
 
-        // Mostrar estado de carga
-        function showLoading() {
-            elements.loading.style.display = 'block';
-            elements.noData.style.display = 'none';
-            elements.exportBtn.style.display = 'none';
-            elements.tableBody.innerHTML = '';
-        }
+            renderChart() {
+                const categoryTotals = {};
+                this.data.forEach(expense => {
+                    categoryTotals[expense.categoria] = (categoryTotals[expense.categoria] || 0) + expense.monto;
+                });
 
-        // Ocultar estado de carga
-        function hideLoading() {
-            elements.loading.style.display = 'none';
-        }
+                const sortedCategories = Object.entries(categoryTotals)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 6);
 
-        // Mostrar mensaje de no datos
-        function showNoData() {
-            elements.noData.style.display = 'block';
-            elements.tableBody.innerHTML = '';
-            elements.exportBtn.style.display = 'none';
-            
-            // Actualizar el mensaje para ser más específico
-            const noDataElement = document.getElementById('no-data');
-            noDataElement.innerHTML = `
-                <i class="fas fa-inbox"></i>
-                <p>No hay datos disponibles</p>
-                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                    Verifica que tu Google Sheets esté publicado y contenga datos
-                </p>
-            `;
-        }
+                const maxValue = Math.max(...sortedCategories.map(cat => cat[1]));
+                const chartContainer = document.getElementById('category-chart');
+                chartContainer.innerHTML = '';
 
-        // Utilidades
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+                sortedCategories.forEach(([category, amount]) => {
+                    const barContainer = document.createElement('div');
+                    barContainer.style.display = 'flex';
+                    barContainer.style.flexDirection = 'column';
+                    barContainer.style.alignItems = 'center';
 
-        function formatPrice(price) {
-            const numPrice = parseInt(price) || 0;
-            return new Intl.NumberFormat('es-PY', {
-                style: 'currency',
-                currency: 'PYG',
-                minimumFractionDigits: 0
-            }).format(numPrice);
-        }
+                    const height = Math.max((amount / maxValue) * 250, 20);
+                    const bar = document.createElement('div');
+                    bar.className = 'chart-bar';
+                    bar.style.height = `${height}px`;
+                    bar.setAttribute('data-value', `₲${this.formatGuaranies(amount)}`);
 
-        // Función para exportar datos
-        function exportToCSV() {
-            if (filteredData.length === 0) return;
-            
-            const headers = Object.keys(filteredData[0]);
-            const csvContent = [
-                headers.join(','),
-                ...filteredData.map(row => 
-                    headers.map(header => `"${row[header] || ''}"`).join(',')
-                )
-            ].join('\n');
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', 'billetera_gastos.csv');
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+                    const label = document.createElement('div');
+                    label.className = 'chart-label';
+                    label.textContent = category.substring(0, 8) + (category.length > 8 ? '...' : '');
 
-
-
-        // Función para agregar nuevo gasto
-        function addNewExpense() {
-            alert('Funcionalidad para agregar nuevo gasto en desarrollo.\n\nEn una versión completa, esto abriría un formulario modal para agregar un nuevo gasto a tu Google Sheets.');
-        }
-
-        // Calcular porcentajes reales basados en los datos
-        function calculateRealPercentages() {
-            if (expensesData.length === 0) return { gastos: 0, tarjeta: 0, transacciones: 0 };
-            
-            // Obtener datos del mes actual y anterior para comparar
-            const currentDate = new Date();
-            const currentMonth = currentDate.getMonth();
-            const currentYear = currentDate.getFullYear();
-            
-            // Filtrar datos del mes actual
-            const currentMonthData = expensesData.filter(row => {
-                if (!row['Fecha']) return false;
-                const rowDate = new Date(row['Fecha']);
-                return rowDate.getMonth() === currentMonth && rowDate.getFullYear() === currentYear;
-            });
-            
-            // Filtrar datos del mes anterior
-            const previousMonthData = expensesData.filter(row => {
-                if (!row['Fecha']) return false;
-                const rowDate = new Date(row['Fecha']);
-                const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-                const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-                return rowDate.getMonth() === prevMonth && rowDate.getFullYear() === prevYear;
-            });
-            
-            // Calcular totales del mes actual
-            const currentTotalGastos = currentMonthData.reduce((sum, row) => {
-                return sum + (parseInt(row['Precio-Gs'] || '0') || 0);
-            }, 0);
-            
-            const currentTotalTarjeta = currentMonthData.reduce((sum, row) => {
-                if (row['Tarjeta'] && row['Tarjeta'].toLowerCase().includes('crédito')) {
-                    return sum + (parseInt(row['Precio-Gs'] || '0') || 0);
-                }
-                return sum;
-            }, 0);
-            
-            const currentTotalTransacciones = currentMonthData.length;
-            
-            // Calcular totales del mes anterior
-            const previousTotalGastos = previousMonthData.reduce((sum, row) => {
-                return sum + (parseInt(row['Precio-Gs'] || '0') || 0);
-            }, 0);
-            
-            const previousTotalTarjeta = previousMonthData.reduce((sum, row) => {
-                if (row['Tarjeta'] && row['Tarjeta'].toLowerCase().includes('crédito')) {
-                    return sum + (parseInt(row['Precio-Gs'] || '0') || 0);
-                }
-                return sum;
-            }, 0);
-            
-            const previousTotalTransacciones = previousMonthData.length;
-            
-            // Calcular porcentajes de cambio
-            const gastosChange = previousTotalGastos > 0 ? 
-                ((currentTotalGastos - previousTotalGastos) / previousTotalGastos) * 100 : 0;
-            
-            const tarjetaChange = previousTotalTarjeta > 0 ? 
-                ((currentTotalTarjeta - previousTotalTarjeta) / previousTotalTarjeta) * 100 : 0;
-            
-            const transaccionesChange = previousTotalTransacciones > 0 ? 
-                ((currentTotalTransacciones - previousTotalTransacciones) / previousTotalTransacciones) * 100 : 0;
-            
-            return {
-                gastos: Math.round(gastosChange * 100) / 100,
-                tarjeta: Math.round(tarjetaChange * 100) / 100,
-                transacciones: Math.round(transaccionesChange * 100) / 100
-            };
-        }
-
-        // Función para refrescar datos automáticamente cada 5 minutos
-        setInterval(() => {
-            // Solo refrescar si la página está visible
-            if (!document.hidden) {
-                loadData();
+                    barContainer.appendChild(bar);
+                    barContainer.appendChild(label);
+                    chartContainer.appendChild(barContainer);
+                });
             }
-        }, 5 * 60 * 1000);
 
-        // Manejar errores globales
-        window.addEventListener('error', function(e) {
-            console.error('Error en la aplicación:', e.error);
-            showNoData();
+            setupEventListeners() {
+                const searchInput = document.getElementById('search-input');
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    this.filteredData = this.data.filter(expense => 
+                        (expense.producto || expense.descripcion || '').toLowerCase().includes(searchTerm) ||
+                        (expense.categoria || '').toLowerCase().includes(searchTerm) ||
+                        (expense.formaPago || '').toLowerCase().includes(searchTerm)
+                    );
+                    this.renderTable();
+                });
+
+                // Event listener para el botón de actualizar
+                const refreshBtn = document.getElementById('refresh-btn');
+                refreshBtn.addEventListener('click', () => {
+                    this.refreshData();
+                });
+            }
+
+            async fetchGoogleSheetsData() {
+                try {
+                    // Usar Google Sheets API v4 con CORS proxy para evitar problemas de CORS
+                    const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${GOOGLE_SHEET_NAME}`;
+                    
+                    console.log('Intentando cargar datos desde:', url);
+                    
+                    const response = await fetch(url);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const csvText = await response.text();
+                    console.log('CSV recibido:', csvText.substring(0, 200) + '...');
+                    
+                    // Parsear CSV
+                    const rows = this.parseCSV(csvText);
+                    
+                    if (rows.length < 2) {
+                        throw new Error('No hay suficientes datos en el sheet');
+                    }
+                    
+                    // La primera fila son los headers
+                    const headers = rows[0];
+                    console.log('Headers encontrados:', headers);
+                    
+                    // Procesar las filas de datos
+                    const expenses = rows.slice(1)
+                        .filter(row => row.length > 0 && row[0] && row[0].trim() !== '') // Filtrar filas vacías
+                        .map(row => {
+                            const expense = {};
+                            headers.forEach((header, index) => {
+                                expense[header.trim()] = row[index] ? row[index].trim() : '';
+                            });
+                            
+                            // Mapear los campos del sheet a nuestro formato
+                            return {
+                                fecha: expense['Fecha'] || expense['fecha'],
+                                producto: expense['Producto'] || expense['producto'],
+                                monto: this.parseAmount(expense['Precio-Gs'] || expense['precio-gs'] || expense['Precio'] || expense['precio']),
+                                categoria: expense['Categoria'] || expense['categoria'] || 'Sin categoría',
+                                formaPago: expense['forma de pago'] || expense['Forma de pago'] || expense['Forma de Pago'],
+                                hora: expense['Hora'] || expense['hora']
+                            };
+                        })
+                        .filter(expense => expense.fecha && expense.producto && expense.monto > 0); // Filtrar registros válidos
+                    
+                    console.log('Datos procesados:', expenses.length, 'registros válidos');
+                    return expenses;
+                    
+                } catch (error) {
+                    console.error('Error fetching Google Sheets data:', error);
+                    throw error;
+                }
+            }
+
+            parseCSV(csvText) {
+                const lines = csvText.split('\n');
+                return lines.map(line => {
+                    // Manejar comillas y comas dentro de campos
+                    const result = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            result.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    
+                    result.push(current.trim());
+                    return result;
+                });
+            }
+
+            parseAmount(amountStr) {
+                if (!amountStr) return 0;
+                
+                // Remover caracteres no numéricos excepto punto y coma
+                const cleanStr = amountStr.toString().replace(/[^\d.,]/g, '');
+                
+                // Manejar diferentes formatos de números
+                if (cleanStr.includes(',')) {
+                    // Formato con comas como separadores de miles
+                    return parseFloat(cleanStr.replace(/,/g, ''));
+                } else {
+                    return parseFloat(cleanStr) || 0;
+                }
+            }
+
+            updateConnectionStatus(message, status) {
+                const statusElement = document.getElementById('status-text');
+                const statusContainer = document.getElementById('connection-status');
+                
+                if (statusElement && statusContainer) {
+                    statusElement.textContent = message;
+                    
+                    // Actualizar colores según el estado
+                    switch (status) {
+                        case 'connected':
+                            statusContainer.style.background = 'rgba(16, 185, 129, 0.2)';
+                            statusContainer.style.border = '1px solid rgba(16, 185, 129, 0.5)';
+                            break;
+                        case 'warning':
+                            statusContainer.style.background = 'rgba(245, 158, 11, 0.2)';
+                            statusContainer.style.border = '1px solid rgba(245, 158, 11, 0.5)';
+                            break;
+                        case 'error':
+                            statusContainer.style.background = 'rgba(239, 68, 68, 0.2)';
+                            statusContainer.style.border = '1px solid rgba(239, 68, 68, 0.5)';
+                            break;
+                        case 'connecting':
+                        default:
+                            statusContainer.style.background = 'rgba(59, 130, 246, 0.2)';
+                            statusContainer.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+                            break;
+                    }
+                }
+            }
+        }
+
+        // Inicializar la aplicación cuando se carga la página
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProWallet();
         });
 
-        // Notificación de estado de conexión
-        window.addEventListener('online', function() {
-            console.log('Conexión restaurada');
-            loadData();
-        });
 
-        window.addEventListener('offline', function() {
-            console.log('Sin conexión a internet');
-            showNoData();
-        });
+
+        // Agregar estilos para las animaciones de notificación
+        const notificationStyles = document.createElement('style');
+        notificationStyles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(notificationStyles);
     </script>
 </body>
 </html>

@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pro Wallet - Dashboard de Gastos</title>
+  
+  <!-- iOS Status Bar Configuration -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="msapplication-navbutton-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-title" content="Pro Wallet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -22,6 +29,27 @@
       min-height: 100vh;
       padding: 20px;
       color: #e2e8f0;
+      /* iOS Status Bar Support */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    /* iOS Status Bar Background */
+    @supports (padding: max(0px)) {
+      body {
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+      }
+    }
+
+    /* Ensure the status bar area has the same background */
+    html {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      min-height: 100vh;
     }
 
     .container {
@@ -319,6 +347,40 @@
       font-size: 0.85rem;
       color: #94a3b8;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* iOS Specific Styles */
+    @media screen and (max-width: 768px) {
+      body {
+        /* Ensure proper spacing on iOS */
+        padding-top: max(20px, env(safe-area-inset-top));
+      }
+      
+      .container {
+        /* Add extra top margin for iOS status bar */
+        margin-top: env(safe-area-inset-top);
+      }
+    }
+
+    /* Prevent iOS Safari from zooming on input focus */
+    @media screen and (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px;
+      }
+    }
+
+    /* iOS Safari specific fixes */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        /* iOS Safari specific background */
+        background-attachment: scroll;
+      }
+      
+      .container {
+        /* Ensure proper rendering on iOS */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
     }
   </style>
 </head>

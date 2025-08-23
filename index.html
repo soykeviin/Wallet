@@ -1,1027 +1,797 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Wallet - Dashboard de Gastos</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Wallet - Dashboard de Gastos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #e2e8f0;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease-out;
-        }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      animation: fadeInUp 0.9s ease-out;
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
+    /* --- Header --- */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        .header h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            letter-spacing: -0.03em;
-            line-height: 1;
-            position: relative;
-        }
+    .header h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #38bdf8, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-out;
+    }
 
-        .header h1::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
-        }
+    .header .subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      font-weight: 500;
+      margin-top: 12px;
+      color: #cbd5e1;
+    }
 
-        .header .subtitle {
-            font-size: 1.375rem;
-            opacity: 0.95;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            line-height: 1.5;
-            margin-top: 20px;
-        }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
 
-        .footer {
-            margin-top: 60px;
-            padding: 30px 0;
-            text-align: center;
-            color: rgba(255,255,255,0.8);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+    #connection-status {
+      margin-top: 15px;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 30px;
+      display: inline-block;
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    /* --- Cards de Stats --- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
 
-        .footer-left {
-            text-align: left;
-        }
+    .stat-card {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(16px);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .footer-right {
-            text-align: right;
-        }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
 
-        .footer-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-        }
+    .stat-card h3 {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
 
-        .footer-subtitle {
-            font-size: 0.875rem;
-            font-weight: 400;
-            opacity: 0.8;
-            letter-spacing: 0.01em;
-        }
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 15px;
+    }
 
-        .footer-year {
-            font-size: 0.875rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
+    .stat-change {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
 
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-            
-            .footer-left,
-            .footer-right {
-                text-align: center;
-            }
-        }
+    /* --- Tabla --- */
+    .expenses-table-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
+    .expenses-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      min-width: 800px;
+    }
 
-        .stat-card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.8);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+    .table-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
+    .refresh-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #e2e8f0;
+    }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
+    .refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
 
-        .stat-card h3 {
-            font-size: 0.875rem;
-            color: #666;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-            line-height: 1.2;
-        }
+    .refresh-btn:active {
+      transform: scale(0.95);
+    }
 
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
+    .refresh-btn.loading {
+      animation: spin 1s linear infinite;
+    }
 
-        .stat-change {
-            display: flex;
-            align-items: center;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 0.01em;
-            line-height: 1.3;
-        }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-        .stat-change.positive {
-            color: #10b981;
-        }
+    .refresh-icon {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
 
-        .stat-change.negative {
-            color: #ef4444;
-        }
 
-        .stat-change .arrow {
-            margin-right: 5px;
-            font-size: 1.2rem;
-        }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-        }
+    .expenses-table th {
+      background: #334155;
+      color: #f8fafc;
+      padding: 12px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      font-weight: 600;
+    }
 
-        .expenses-table-container {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.8);
-        }
+    .expenses-table td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      text-align: left;
+      vertical-align: middle;
+    }
 
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+    .expenses-table td:nth-child(1) {
+      width: 12%;
+      font-weight: 500;
+    }
 
-        .table-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #333;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
-        }
+    .expenses-table td:nth-child(2) {
+      width: 25%;
+      font-weight: 500;
+    }
 
-        .table-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    .expenses-table td:nth-child(3) {
+      width: 15%;
+    }
 
-        .refresh-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .expenses-table td:nth-child(4) {
+      width: 20%;
+      text-align: right;
+      font-weight: 600;
+      color: #38bdf8;
+    }
 
-        .refresh-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
-        }
+    .expenses-table td:nth-child(5) {
+      width: 15%;
+      text-align: center;
+    }
 
-        .refresh-btn:active {
-            transform: scale(0.95);
-        }
+    .expenses-table td:nth-child(6) {
+      width: 13%;
+      text-align: center;
+      color: #94a3b8;
+    }
 
-        .refresh-btn.loading svg {
-            animation: spin 1s linear infinite;
-        }
+    .expenses-table th:nth-child(4) {
+      text-align: right;
+    }
 
-        .search-box {
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            outline: none;
-            transition: all 0.3s ease;
-        }
+    .expenses-table th:nth-child(5),
+    .expenses-table th:nth-child(6) {
+      text-align: center;
+    }
 
-        .search-box:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
+    .expenses-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s ease;
+    }
 
-        .expenses-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    .expenses-table tr:nth-child(even) td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
 
-        .expenses-table th {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 12px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            line-height: 1.2;
-        }
+    .expenses-table tr:nth-child(even):hover td {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
 
-        .expenses-table th:first-child {
-            border-radius: 10px 0 0 10px;
-        }
+    /* Responsive design for mobile */
+    @media (max-width: 768px) {
+      .expenses-table-container {
+        padding: 15px;
+      }
+      
+      .expenses-table {
+        min-width: 600px;
+        font-size: 0.8rem;
+      }
+      
+      .expenses-table th,
+      .expenses-table td {
+        padding: 8px 6px;
+      }
+    }
 
-        .expenses-table th:last-child {
-            border-radius: 0 10px 10px 0;
-        }
+    /* --- Chart --- */
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .expenses-table td {
-            padding: 15px 12px;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 0.875rem;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-            line-height: 1.4;
-            transition: all 0.3s ease;
-        }
+    .chart-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 15px;
+      text-align: center;
+    }
 
-        .expenses-table tr:hover td {
-            background-color: #f8fafc;
-        }
-
-        .category-tag {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            line-height: 1.2;
-        }
-
-        .category-alimentacion { background: #fef3c7; color: #92400e; }
-        .category-transporte { background: #dbeafe; color: #1e40af; }
-        .category-entretenimiento { background: #fce7f3; color: #be185d; }
-        .category-servicios { background: #d1fae5; color: #065f46; }
-        .category-compras { background: #e0e7ff; color: #3730a3; }
-        .category-otros { background: #f3f4f6; color: #374151; }
-
-        .amount {
-            font-weight: 600;
-            color: #ef4444;
-            letter-spacing: -0.01em;
-        }
-
-        .chart-container {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-
-        .chart-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
-            text-align: center;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
-        }
-
-        .chart {
-            height: 300px;
-            display: flex;
-            align-items: end;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 20px 0;
-        }
-
-        .chart-bar {
-            width: 40px;
-            background: linear-gradient(to top, #667eea, #764ba2);
-            border-radius: 5px 5px 0 0;
-            position: relative;
-            transition: all 0.3s ease;
-            animation: slideUp 1s ease-out;
-        }
-
-        .chart-bar:hover {
-            transform: scale(1.05);
-        }
-
-        @keyframes slideUp {
-            from {
-                height: 0 !important;
-            }
-        }
-
-        .chart-bar::before {
-            content: attr(data-value);
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #333;
-            letter-spacing: -0.01em;
-        }
-
-        .chart-label {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.75rem;
-            color: #666;
-            font-weight: 500;
-            letter-spacing: 0.01em;
-            line-height: 1.2;
-        }
-
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 3rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .expenses-table {
-                font-size: 0.75rem;
-            }
-            
-            .expenses-table th,
-            .expenses-table td {
-                padding: 10px 8px;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-                letter-spacing: -0.02em;
-            }
-            
-            .header .subtitle {
-                font-size: 1.125rem;
-            }
-        }
-    </style>
+    /* --- Footer --- */
+    .footer {
+      margin-top: 60px;
+      padding: 25px 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
 </head>
 <body>
-    <br>
-    <div class="container">
-        <div class="header">
-            <h1>PRO WALLET </h1>
-            <p class="subtitle">Tu dashboard profesional de gastos personales</p>
-            <div id="connection-status" style="margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 20px; display: inline-block; font-size: 0.9rem;">
-                <span id="status-text">Conectando a Google Sheets...</span>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Gasto Total</h3>
-                <div class="stat-value" id="total-expenses">$0</div>
-                <div class="stat-change" id="total-change">
-                    <span class="arrow">→</span>
-                    Calculando...
-                </div>
-            </div>
-            <div class="stat-card">
-                <h3>Gasto del Mes</h3>
-                <div class="stat-value" id="month-expenses">$0</div>
-                <div class="stat-change" id="month-change">
-                    <span class="arrow">→</span>
-                    Calculando...
-                </div>
-            </div>
-            <div class="stat-card">
-                <h3>Promedio Diario</h3>
-                <div class="stat-value" id="daily-average">$0</div>
-                <div class="stat-change" id="daily-change">
-                    <span class="arrow">→</span>
-                    Este mes
-                </div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="expenses-table-container">
-                <div class="table-header">
-                    <h2 class="table-title">Últimos Gastos</h2>
-                    <div class="table-controls">
-                        <button class="refresh-btn" id="refresh-btn" title="Actualizar datos">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                                <path d="M21 3v5h-5"/>
-                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-                                <path d="M3 21v-5h5"/>
-                            </svg>
-                        </button>
-                        <input type="text" class="search-box" id="search-input" placeholder="Buscar gastos...">
-                    </div>
-                </div>
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                </div>
-                <table class="expenses-table" id="expenses-table" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Precio (Gs)</th>
-                            <th>Forma de Pago</th>
-                            <th>Hora</th>
-                        </tr>
-                    </thead>
-                    <tbody id="expenses-tbody">
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="chart-container">
-                <h3 class="chart-title">Gastos por Categoría</h3>
-                <div class="chart" id="category-chart">
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>PRO WALLET</h1>
+      <p class="subtitle">Tu dashboard profesional de gastos personales</p>
+      <div id="connection-status">
+        <span id="status-text">Conectando a Google Sheets...</span>
+      </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="footer-title">Pro Wallet</div>
-                <div class="footer-subtitle">Dashboard profesional de gastos personales</div>
-            </div>
-            <div class="footer-right">
-                <div class="footer-year">© 2025 Desarrollado por KEV</div>
-            </div>
-        </div>
-    </footer>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Gasto Total</h3>
+        <div class="stat-value" id="total-expenses" data-value="0">$0</div>
+        <div class="stat-change" id="total-change">Calculando...</div>
+      </div>
+      <div class="stat-card">
+        <h3>Gasto del Mes</h3>
+        <div class="stat-value" id="month-expenses" data-value="0">$0</div>
+        <div class="stat-change" id="month-change">Calculando...</div>
+      </div>
+      <div class="stat-card">
+        <h3>Promedio Diario</h3>
+        <div class="stat-value" id="daily-average" data-value="0">$0</div>
+        <div class="stat-change" id="daily-change">Este mes</div>
+      </div>
+    </div>
 
-    <script>
-        // Configuración de Google Sheets
-        const GOOGLE_SHEET_ID = '1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg';
-        const GOOGLE_SHEET_NAME = 'Sheet1';
+    <div class="main-content">
+      <div class="expenses-table-container">
+        <h2 class="table-title">
+          Últimos Gastos
+          <button class="refresh-btn" id="refresh-btn" title="Recargar datos">
+            <svg class="refresh-icon" viewBox="0 0 24 24">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+          </button>
+        </h2>
+        <table class="expenses-table" id="expenses-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Precio (Gs)</th>
+              <th>Forma de Pago</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody id="expenses-tbody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-container">
+        <h3 class="chart-title">Gastos por Categoría</h3>
+        <div class="chart" id="category-chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 Desarrollado por KEV
+  </footer>
+
+  <script>
+    // Configuración de Google Sheets
+    const GOOGLE_SHEETS_CONFIG = {
+        SHEET_ID: '1-71MXkppgdH3q-F8t6TnKK4V18s_AHqlMIzxG3mfWLg',
+        SHEET_NAME: 'Sheet1'
+    };
+
+    // Estado global
+    let expensesData = [];
+    let connectionStatus = 'connecting';
+
+    // Elementos del DOM
+    const elements = {
+        statusText: document.getElementById('status-text'),
+        totalExpenses: document.getElementById('total-expenses'),
+        monthExpenses: document.getElementById('month-expenses'),
+        dailyAverage: document.getElementById('daily-average'),
+        totalChange: document.getElementById('total-change'),
+        monthChange: document.getElementById('month-change'),
+        dailyChange: document.getElementById('daily-change'),
+        expensesTbody: document.getElementById('expenses-tbody'),
+        categoryChart: document.getElementById('category-chart'),
+        refreshBtn: document.getElementById('refresh-btn')
+    };
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeDashboard();
+        setupEventListeners();
+    });
+
+    // Configurar event listeners
+    function setupEventListeners() {
+        elements.refreshBtn.addEventListener('click', handleRefresh);
+    }
+
+    // Manejar click del botón de refresh
+    async function handleRefresh() {
+        if (elements.refreshBtn.classList.contains('loading')) {
+            return; // Evitar múltiples clicks mientras está cargando
+        }
+
+        // Agregar clase de loading
+        elements.refreshBtn.classList.add('loading');
         
-        // Datos de ejemplo en Guaraníes (fallback si no se puede conectar a Google Sheets)
-        const sampleData = [
-            { fecha: '2024-08-20', descripcion: 'Supermercado Stock', categoria: 'Alimentación', monto: 285000 },
-            { fecha: '2024-08-19', descripcion: 'Uber', categoria: 'Transporte', monto: 45000 },
-            { fecha: '2024-08-18', descripcion: 'Netflix', categoria: 'Entretenimiento', monto: 89000 },
-            { fecha: '2024-08-17', descripcion: 'ANDE - Electricidad', categoria: 'Servicios', monto: 320000 },
-            { fecha: '2024-08-16', descripcion: 'Restaurante El Bolsi', categoria: 'Alimentación', monto: 125000 },
-            { fecha: '2024-08-15', descripcion: 'Combustible Copetrol', categoria: 'Transporte', monto: 180000 },
-            { fecha: '2024-08-14', descripcion: 'MercadoLibre', categoria: 'Compras', monto: 350000 },
-            { fecha: '2024-08-13', descripcion: 'Café Martinez', categoria: 'Alimentación', monto: 25000 },
-            { fecha: '2024-08-12', descripcion: 'Cine Showcase', categoria: 'Entretenimiento', monto: 65000 },
-            { fecha: '2024-08-11', descripcion: 'Farmacia Catedral', categoria: 'Otros', monto: 95000 },
-            { fecha: '2024-08-10', descripcion: 'Tigo Money', categoria: 'Servicios', monto: 15000 },
-            { fecha: '2024-08-09', descripcion: 'Real Supermercado', categoria: 'Alimentación', monto: 225000 },
-            { fecha: '2024-07-28', descripcion: 'Gasolina Shell', categoria: 'Transporte', monto: 175000 },
-            { fecha: '2024-07-25', descripcion: 'Personal Internet', categoria: 'Servicios', monto: 155000 },
-            { fecha: '2024-07-20', descripcion: 'Pizzería Don Vito', categoria: 'Alimentación', monto: 185000 },
-            { fecha: '2024-07-18', descripcion: 'Shopping del Sol', categoria: 'Compras', monto: 425000 },
-            { fecha: '2024-07-15', descripcion: 'Agua ESSAP', categoria: 'Servicios', monto: 85000 },
-            { fecha: '2024-07-12', descripcion: 'Uber Eats', categoria: 'Alimentación', monto: 75000 },
-            { fecha: '2024-07-10', descripcion: 'Claro TV', categoria: 'Servicios', monto: 125000 },
-            { fecha: '2024-07-08', descripcion: 'Farmacia San Roque', categoria: 'Otros', monto: 55000 }
-        ];
-
-        class ProWallet {
-            constructor() {
-                this.data = [];
-                this.filteredData = [];
-                this.init();
-            }
-
-            async init() {
-                try {
-                    // Simular carga de datos
-                    await this.loadData();
-                    this.renderStats();
-                    this.renderTable();
-                    this.renderChart();
-                    this.setupEventListeners();
-                } catch (error) {
-                    console.error('Error initializing Pro Wallet:', error);
+        try {
+            // Actualizar estado de conexión
+            updateConnectionStatus('Recargando datos...', 'connecting');
+            
+            // Recargar datos
+            await loadDataFromGoogleSheets();
+            
+            // Mostrar mensaje de éxito temporal
+            updateConnectionStatus('Datos actualizados', 'connected');
+            
+            // Ocultar mensaje después de 2 segundos
+            setTimeout(() => {
+                if (connectionStatus === 'connected') {
+                    updateConnectionStatus('Conectado a Google Sheets', 'connected');
                 }
-            }
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Error al recargar:', error);
+            updateConnectionStatus('Error al recargar: ' + error.message, 'error');
+        } finally {
+            // Remover clase de loading
+            elements.refreshBtn.classList.remove('loading');
+        }
+    }
 
-            async loadData() {
+    // Inicializar dashboard
+    async function initializeDashboard() {
+        try {
+            updateConnectionStatus('Conectando a Google Sheets...', 'connecting');
+            await loadDataFromGoogleSheets();
+        } catch (error) {
+            console.error('Error al inicializar:', error);
+            updateConnectionStatus('Error de conexión', 'error');
+        }
+    }
+
+    // Cargar datos desde Google Sheets
+    async function loadDataFromGoogleSheets() {
+        try {
+            // URLs para intentar acceder a Google Sheets
+            const urls = [
+                `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEETS_CONFIG.SHEET_ID}/pub?gid=0&single=true&output=csv`,
+                `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEETS_CONFIG.SHEET_ID}/export?gid=0&format=csv`
+            ];
+
+            let csvData = null;
+            let lastError = null;
+
+            // Intentar cada URL
+            for (const url of urls) {
                 try {
-                    // Actualizar estado de conexión
-                    this.updateConnectionStatus('Conectando a Google Sheets...', 'connecting');
-                    
-                    // Intentar cargar datos desde Google Sheets
-                    const sheetData = await this.fetchGoogleSheetsData();
-                    
-                    if (sheetData && sheetData.length > 0) {
-                        this.data = sheetData.map(item => ({
-                            ...item,
-                            fecha: new Date(item.fecha),
-                            monto: parseFloat(item.monto)
-                        })).sort((a, b) => b.fecha - a.fecha);
-                        
-                        console.log('Datos cargados desde Google Sheets:', this.data.length, 'registros');
-                        this.updateConnectionStatus(`✅ Conectado a Google Sheets (${this.data.length} registros)`, 'connected');
-                    } else {
-                        // Fallback a datos de ejemplo
-                        this.data = sampleData.map(item => ({
-                            ...item,
-                            fecha: new Date(item.fecha),
-                            monto: parseFloat(item.monto)
-                        })).sort((a, b) => b.fecha - a.fecha);
-                        
-                        console.log('Usando datos de ejemplo (fallback)');
-                        this.updateConnectionStatus('⚠️ Usando datos de ejemplo (Sheet vacío)', 'warning');
-                    }
-                    
-                    this.filteredData = [...this.data];
-                    
-                    // Ocultar loading
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('expenses-table').style.display = 'table';
-                    
-                } catch (error) {
-                    console.error('Error cargando datos:', error);
-                    
-                    // Fallback a datos de ejemplo en caso de error
-                    this.data = sampleData.map(item => ({
-                        ...item,
-                        fecha: new Date(item.fecha),
-                        monto: parseFloat(item.monto)
-                    })).sort((a, b) => b.fecha - a.fecha);
-                    
-                    this.filteredData = [...this.data];
-                    
-                    // Ocultar loading
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('expenses-table').style.display = 'table';
-                    
-                    this.updateConnectionStatus('❌ Error de conexión - Usando datos de ejemplo', 'error');
-                    this.showNotification('Error al cargar datos de Google Sheets. Usando datos de ejemplo.', 'error');
-                }
-            }
-
-            renderStats() {
-                const now = new Date();
-                const currentMonth = now.getMonth();
-                const currentYear = now.getFullYear();
-                const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-                const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-
-                // Calcular gastos totales
-                const totalExpenses = this.data.reduce((sum, item) => sum + item.monto, 0);
-                
-                // Calcular gastos del mes actual
-                const currentMonthExpenses = this.data
-                    .filter(item => item.fecha.getMonth() === currentMonth && item.fecha.getFullYear() === currentYear)
-                    .reduce((sum, item) => sum + item.monto, 0);
-                
-                // Calcular gastos del mes pasado
-                const lastMonthExpenses = this.data
-                    .filter(item => item.fecha.getMonth() === lastMonth && item.fecha.getFullYear() === lastMonthYear)
-                    .reduce((sum, item) => sum + item.monto, 0);
-
-                // Calcular cambio porcentual
-                const monthChange = lastMonthExpenses > 0 
-                    ? ((currentMonthExpenses - lastMonthExpenses) / lastMonthExpenses * 100).toFixed(1)
-                    : 0;
-
-                // Calcular promedio diario
-                const currentMonthDays = new Date(currentYear, currentMonth + 1, 0).getDate();
-                const daysPassed = now.getDate();
-                const dailyAverage = daysPassed > 0 ? (currentMonthExpenses / daysPassed).toFixed(2) : 0;
-
-                // Actualizar UI con formato de Guaraníes
-                document.getElementById('total-expenses').textContent = `₲${this.formatGuaranies(totalExpenses)}`;
-                document.getElementById('month-expenses').textContent = `₲${this.formatGuaranies(currentMonthExpenses)}`;
-                document.getElementById('daily-average').textContent = `₲${this.formatGuaranies(dailyAverage)}`;
-
-                // Actualizar cambios
-                const totalChangeEl = document.getElementById('total-change');
-                totalChangeEl.innerHTML = `<span class="arrow">💰</span>Todos los gastos`;
-
-                const monthChangeEl = document.getElementById('month-change');
-                const isPositive = monthChange >= 0;
-                monthChangeEl.className = `stat-change ${isPositive ? 'negative' : 'positive'}`;
-                monthChangeEl.innerHTML = `
-                    <span class="arrow">${isPositive ? '📈' : '📉'}</span>
-                    ${isPositive ? '+' : ''}${monthChange}% vs mes pasado
-                `;
-
-                const dailyChangeEl = document.getElementById('daily-change');
-                dailyChangeEl.innerHTML = `<span class="arrow">📊</span>Últimos ${daysPassed} días`;
-            }
-
-            formatGuaranies(amount) {
-                return new Intl.NumberFormat('es-PY', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }).format(amount);
-            }
-
-            async refreshData() {
-                const refreshBtn = document.getElementById('refresh-btn');
-                refreshBtn.classList.add('loading');
-                refreshBtn.disabled = true;
-
-                try {
-                    // Recargar datos desde Google Sheets
-                    await this.loadData();
-                    this.renderStats();
-                    this.renderTable();
-                    this.renderChart();
-                    
-                    // Mostrar notificación de éxito
-                    this.showNotification('Datos actualizados correctamente desde Google Sheets', 'success');
-                } catch (error) {
-                    console.error('Error actualizando datos:', error);
-                    this.showNotification('Error al actualizar los datos', 'error');
-                } finally {
-                    refreshBtn.classList.remove('loading');
-                    refreshBtn.disabled = false;
-                }
-            }
-
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
-                    color: white;
-                    padding: 15px 20px;
-                    border-radius: 10px;
-                    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-                    z-index: 1000;
-                    animation: slideInRight 0.3s ease-out;
-                `;
-                notification.textContent = message;
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-
-            renderTable() {
-                const tbody = document.getElementById('expenses-tbody');
-                tbody.innerHTML = '';
-
-                this.filteredData.slice(0, 20).forEach(expense => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${expense.fecha.toLocaleDateString('es-PY')}</td>
-                        <td>${expense.producto || expense.descripcion || 'N/A'}</td>
-                        <td><span class="category-tag category-${(expense.categoria || 'otros').toLowerCase().replace('ó', 'o').replace('í', 'i').replace(' ', '-')}">${expense.categoria || 'Sin categoría'}</span></td>
-                        <td class="amount">₲${this.formatGuaranies(expense.monto)}</td>
-                        <td>${expense.formaPago || 'N/A'}</td>
-                        <td>${expense.hora || 'N/A'}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            renderChart() {
-                const categoryTotals = {};
-                this.data.forEach(expense => {
-                    categoryTotals[expense.categoria] = (categoryTotals[expense.categoria] || 0) + expense.monto;
-                });
-
-                const sortedCategories = Object.entries(categoryTotals)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 6);
-
-                const maxValue = Math.max(...sortedCategories.map(cat => cat[1]));
-                const chartContainer = document.getElementById('category-chart');
-                chartContainer.innerHTML = '';
-
-                sortedCategories.forEach(([category, amount]) => {
-                    const barContainer = document.createElement('div');
-                    barContainer.style.display = 'flex';
-                    barContainer.style.flexDirection = 'column';
-                    barContainer.style.alignItems = 'center';
-
-                    const height = Math.max((amount / maxValue) * 250, 20);
-                    const bar = document.createElement('div');
-                    bar.className = 'chart-bar';
-                    bar.style.height = `${height}px`;
-                    bar.setAttribute('data-value', `₲${this.formatGuaranies(amount)}`);
-
-                    const label = document.createElement('div');
-                    label.className = 'chart-label';
-                    label.textContent = category.substring(0, 8) + (category.length > 8 ? '...' : '');
-
-                    barContainer.appendChild(bar);
-                    barContainer.appendChild(label);
-                    chartContainer.appendChild(barContainer);
-                });
-            }
-
-            setupEventListeners() {
-                const searchInput = document.getElementById('search-input');
-                searchInput.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    this.filteredData = this.data.filter(expense => 
-                        (expense.producto || expense.descripcion || '').toLowerCase().includes(searchTerm) ||
-                        (expense.categoria || '').toLowerCase().includes(searchTerm) ||
-                        (expense.formaPago || '').toLowerCase().includes(searchTerm)
-                    );
-                    this.renderTable();
-                });
-
-                // Event listener para el botón de actualizar
-                const refreshBtn = document.getElementById('refresh-btn');
-                refreshBtn.addEventListener('click', () => {
-                    this.refreshData();
-                });
-            }
-
-            async fetchGoogleSheetsData() {
-                try {
-                    // Usar Google Sheets API v4 con CORS proxy para evitar problemas de CORS
-                    const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${GOOGLE_SHEET_NAME}`;
-                    
-                    console.log('Intentando cargar datos desde:', url);
-                    
+                    console.log('Intentando URL:', url);
                     const response = await fetch(url);
                     
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                    if (response.ok) {
+                        csvData = await response.text();
+                        console.log('Datos CSV obtenidos exitosamente');
+                        break;
+                    } else {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
-                    
-                    const csvText = await response.text();
-                    console.log('CSV recibido:', csvText.substring(0, 200) + '...');
-                    
-                    // Parsear CSV
-                    const rows = this.parseCSV(csvText);
-                    
-                    if (rows.length < 2) {
-                        throw new Error('No hay suficientes datos en el sheet');
-                    }
-                    
-                    // La primera fila son los headers
-                    const headers = rows[0];
-                    console.log('Headers encontrados:', headers);
-                    
-                    // Procesar las filas de datos
-                    const expenses = rows.slice(1)
-                        .filter(row => row.length > 0 && row[0] && row[0].trim() !== '') // Filtrar filas vacías
-                        .map(row => {
-                            const expense = {};
-                            headers.forEach((header, index) => {
-                                expense[header.trim()] = row[index] ? row[index].trim() : '';
-                            });
-                            
-                            // Mapear los campos del sheet a nuestro formato
-                            return {
-                                fecha: expense['Fecha'] || expense['fecha'],
-                                producto: expense['Producto'] || expense['producto'],
-                                monto: this.parseAmount(expense['Precio-Gs'] || expense['precio-gs'] || expense['Precio'] || expense['precio']),
-                                categoria: expense['Categoria'] || expense['categoria'] || 'Sin categoría',
-                                formaPago: expense['forma de pago'] || expense['Forma de pago'] || expense['Forma de Pago'],
-                                hora: expense['Hora'] || expense['hora']
-                            };
-                        })
-                        .filter(expense => expense.fecha && expense.producto && expense.monto > 0); // Filtrar registros válidos
-                    
-                    console.log('Datos procesados:', expenses.length, 'registros válidos');
-                    return expenses;
-                    
                 } catch (error) {
-                    console.error('Error fetching Google Sheets data:', error);
-                    throw error;
+                    console.warn('Error con URL:', url, error);
+                    lastError = error;
+                    continue;
                 }
             }
 
-            parseCSV(csvText) {
-                const lines = csvText.split('\n');
-                return lines.map(line => {
-                    // Manejar comillas y comas dentro de campos
-                    const result = [];
-                    let current = '';
-                    let inQuotes = false;
-                    
-                    for (let i = 0; i < line.length; i++) {
-                        const char = line[i];
-                        
-                        if (char === '"') {
-                            inQuotes = !inQuotes;
-                        } else if (char === ',' && !inQuotes) {
-                            result.push(current.trim());
-                            current = '';
-                        } else {
-                            current += char;
-                        }
-                    }
-                    
-                    result.push(current.trim());
-                    return result;
+            if (!csvData) {
+                throw new Error('No se pudo acceder a Google Sheets. Verifica que esté publicado.');
+            }
+
+            // Parsear CSV
+            expensesData = parseCSV(csvData);
+            
+            if (expensesData.length === 0) {
+                throw new Error('No se encontraron datos en la hoja');
+            }
+
+            console.log('Datos cargados:', expensesData.length, 'filas');
+            
+            // Actualizar UI
+            updateDashboard();
+            updateConnectionStatus('Conectado a Google Sheets', 'connected');
+
+        } catch (error) {
+            console.error('Error al cargar datos:', error);
+            updateConnectionStatus('Error: ' + error.message, 'error');
+            
+            // Mostrar datos de ejemplo si hay error
+            showSampleData();
+        }
+    }
+
+    // Parsear CSV a array de objetos
+    function parseCSV(csvText) {
+        const lines = csvText.trim().split('\n');
+        if (lines.length < 2) return [];
+
+        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        const data = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+            
+            // Solo procesar filas con datos válidos
+            if (values.length > 0 && values.slice(0, 3).some(v => v !== '')) {
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
                 });
-            }
-
-            parseAmount(amountStr) {
-                if (!amountStr) return 0;
-                
-                // Remover caracteres no numéricos excepto punto y coma
-                const cleanStr = amountStr.toString().replace(/[^\d.,]/g, '');
-                
-                // Manejar diferentes formatos de números
-                if (cleanStr.includes(',')) {
-                    // Formato con comas como separadores de miles
-                    return parseFloat(cleanStr.replace(/,/g, ''));
-                } else {
-                    return parseFloat(cleanStr) || 0;
-                }
-            }
-
-            updateConnectionStatus(message, status) {
-                const statusElement = document.getElementById('status-text');
-                const statusContainer = document.getElementById('connection-status');
-                
-                if (statusElement && statusContainer) {
-                    statusElement.textContent = message;
-                    
-                    // Actualizar colores según el estado
-                    switch (status) {
-                        case 'connected':
-                            statusContainer.style.background = 'rgba(16, 185, 129, 0.2)';
-                            statusContainer.style.border = '1px solid rgba(16, 185, 129, 0.5)';
-                            break;
-                        case 'warning':
-                            statusContainer.style.background = 'rgba(245, 158, 11, 0.2)';
-                            statusContainer.style.border = '1px solid rgba(245, 158, 11, 0.5)';
-                            break;
-                        case 'error':
-                            statusContainer.style.background = 'rgba(239, 68, 68, 0.2)';
-                            statusContainer.style.border = '1px solid rgba(239, 68, 68, 0.5)';
-                            break;
-                        case 'connecting':
-                        default:
-                            statusContainer.style.background = 'rgba(59, 130, 246, 0.2)';
-                            statusContainer.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-                            break;
-                    }
-                }
+                data.push(row);
             }
         }
 
-        // Inicializar la aplicación cuando se carga la página
-        document.addEventListener('DOMContentLoaded', () => {
-            new ProWallet();
+        return data;
+    }
+
+    // Actualizar dashboard con datos reales
+    function updateDashboard() {
+        updateStats();
+        updateExpensesTable();
+        updateCategoryChart();
+    }
+
+    // Actualizar estadísticas
+    function updateStats() {
+        const totalExpenses = expensesData.reduce((sum, row) => {
+            const precio = parseInt(row['Precio-Gs'] || '0') || 0;
+            return sum + precio;
+        }, 0);
+
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        
+        const monthExpenses = expensesData.reduce((sum, row) => {
+            const fecha = row['Fecha'];
+            if (fecha) {
+                const date = parseDate(fecha);
+                if (date && date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
+                    const precio = parseInt(row['Precio-Gs'] || '0') || 0;
+                    return sum + precio;
+                }
+            }
+            return sum;
+        }, 0);
+
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        const dailyAverage = Math.round(monthExpenses / daysInMonth);
+
+        // Animar valores
+        animateValue('total-expenses', 0, totalExpenses, 1000);
+        animateValue('month-expenses', 0, monthExpenses, 1000);
+        animateValue('daily-average', 0, dailyAverage, 1000);
+
+        // Actualizar textos de cambio
+        elements.totalChange.textContent = `${expensesData.length} transacciones`;
+        elements.monthChange.textContent = 'Este mes';
+        elements.dailyChange.textContent = 'Promedio diario';
+    }
+
+    // Actualizar tabla de gastos
+    function updateExpensesTable() {
+        // Tomar los últimos 10 gastos
+        const recentExpenses = expensesData
+            .filter(row => row['Producto'] && row['Precio-Gs'])
+            .slice(-10)
+            .reverse();
+
+        if (recentExpenses.length === 0) {
+            elements.expensesTbody.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8; font-style: italic;">
+                        No hay gastos registrados
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        const tableHTML = recentExpenses.map(row => {
+            const categoria = row['Categoria'] || 'General';
+            const formaPago = row['forma de pago'] || 'N/A';
+            const hora = row['Hora'] || 'N/A';
+            
+            // Aplicar estilos especiales según la forma de pago
+            let formaPagoClass = '';
+            if (formaPago.toLowerCase().includes('crédito')) {
+                formaPagoClass = 'style="color: #f59e0b; font-weight: 500;"';
+            } else if (formaPago.toLowerCase().includes('débito')) {
+                formaPagoClass = 'style="color: #10b981; font-weight: 500;"';
+            } else if (formaPago.toLowerCase().includes('efectivo')) {
+                formaPagoClass = 'style="color: #6366f1; font-weight: 500;"';
+            }
+
+            return `
+                <tr>
+                    <td>${formatDate(row['Fecha'])}</td>
+                    <td>${escapeHtml(row['Producto'])}</td>
+                    <td>${escapeHtml(categoria)}</td>
+                    <td>${formatPrice(row['Precio-Gs'])}</td>
+                    <td ${formaPagoClass}>${escapeHtml(formaPago)}</td>
+                    <td>${escapeHtml(hora)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        elements.expensesTbody.innerHTML = tableHTML;
+    }
+
+    // Actualizar gráfico de categorías
+    function updateCategoryChart() {
+        const categoryData = {};
+        
+        expensesData.forEach(row => {
+            const categoria = row['Categoria'] || 'General';
+            const precio = parseInt(row['Precio-Gs'] || '0') || 0;
+            
+            categoryData[categoria] = (categoryData[categoria] || 0) + precio;
         });
 
+        // Crear gráfico simple con HTML/CSS
+        const chartHTML = Object.entries(categoryData)
+            .sort(([,a], [,b]) => b - a)
+            .slice(0, 5)
+            .map(([category, amount]) => {
+                const percentage = (amount / Object.values(categoryData).reduce((a, b) => a + b, 0)) * 100;
+                return `
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="font-size: 0.9rem;">${escapeHtml(category)}</span>
+                            <span style="font-size: 0.9rem; color: #38bdf8;">${formatPrice(amount.toString())}</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #38bdf8, #6366f1); height: 100%; width: ${percentage}%; transition: width 0.8s ease;"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
 
+        elements.categoryChart.innerHTML = chartHTML;
+    }
 
-        // Agregar estilos para las animaciones de notificación
-        const notificationStyles = document.createElement('style');
-        notificationStyles.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
+    // Mostrar datos de ejemplo si hay error
+    function showSampleData() {
+        const sampleData = [
+            { 'Producto': 'Galletita', 'Fecha': '2024-12-19', 'Precio-Gs': '8000', 'forma de pago': 'CRÉDITO', 'Hora': '14:30', 'Categoria': 'Alimentos' },
+            { 'Producto': 'Netflix', 'Fecha': '2024-12-19', 'Precio-Gs': '75000', 'forma de pago': 'EFECTIVO', 'Hora': '15:30', 'Categoria': 'Suscripción' },
+            { 'Producto': 'Pizza', 'Fecha': '2024-12-19', 'Precio-Gs': '47500', 'forma de pago': 'EFECTIVO', 'Hora': '14:30', 'Categoria': 'Alimentos' }
+        ];
+
+        expensesData = sampleData;
+        updateDashboard();
+    }
+
+    // Actualizar estado de conexión
+    function updateConnectionStatus(message, status) {
+        connectionStatus = status;
+        elements.statusText.textContent = message;
+        
+        const statusElement = document.getElementById('connection-status');
+        statusElement.className = '';
+        
+        switch (status) {
+            case 'connected':
+                statusElement.style.background = 'rgba(34, 197, 94, 0.1)';
+                statusElement.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+                statusElement.style.color = '#22c55e';
+                break;
+            case 'error':
+                statusElement.style.background = 'rgba(239, 68, 68, 0.1)';
+                statusElement.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                statusElement.style.color = '#ef4444';
+                break;
+            case 'connecting':
+            default:
+                statusElement.style.background = 'rgba(59, 130, 246, 0.1)';
+                statusElement.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                statusElement.style.color = '#3b82f6';
+                break;
+        }
+    }
+
+    // Utilidades
+    function parseDate(dateString) {
+        // Intentar diferentes formatos de fecha
+        const formats = [
+            /(\d{1,2})\/(\d{1,2})\/(\d{4})/, // DD/MM/YYYY
+            /(\d{4})-(\d{1,2})-(\d{1,2})/,   // YYYY-MM-DD
+        ];
+
+        for (const format of formats) {
+            const match = dateString.match(format);
+            if (match) {
+                if (format.source.includes('YYYY')) {
+                    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
+                } else {
+                    return new Date(parseInt(match[3]), parseInt(match[2]) - 1, parseInt(match[1]));
                 }
             }
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(notificationStyles);
-    </script>
+        }
+        return null;
+    }
+
+    function formatDate(dateString) {
+        const date = parseDate(dateString);
+        if (!date) return dateString;
+        
+        return date.toLocaleDateString('es-PY', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    function formatPrice(price) {
+        const numPrice = parseInt(price) || 0;
+        return new Intl.NumberFormat('es-PY', {
+            style: 'currency',
+            currency: 'PYG',
+            minimumFractionDigits: 0
+        }).format(numPrice);
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // --- Animación de conteo ---
+    function animateValue(id, start, end, duration) {
+      const element = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = "₲" + new Intl.NumberFormat('es-PY').format(value);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Refrescar datos automáticamente cada 5 minutos
+    setInterval(() => {
+        if (!document.hidden && connectionStatus === 'connected') {
+            loadDataFromGoogleSheets();
+        }
+    }, 5 * 60 * 1000);
+
+    // Manejar cambios de visibilidad de la página
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && connectionStatus !== 'connected') {
+            initializeDashboard();
+        }
+    });
+  </script>
 </body>
 </html>

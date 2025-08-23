@@ -50,6 +50,16 @@
     html {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       min-height: 100vh;
+      /* iOS Home Indicator Support */
+      min-height: -webkit-fill-available;
+    }
+
+    /* iOS Home Indicator Background Fix */
+    @supports (padding: max(0px)) {
+      html {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
     }
 
     .container {
@@ -354,11 +364,18 @@
       body {
         /* Ensure proper spacing on iOS */
         padding-top: max(20px, env(safe-area-inset-top));
+        /* Ensure bottom area matches background */
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
       }
       
       .container {
         /* Add extra top margin for iOS status bar */
         margin-top: env(safe-area-inset-top);
+      }
+
+      .footer {
+        /* Ensure footer respects bottom safe area */
+        margin-bottom: env(safe-area-inset-bottom);
       }
     }
 
@@ -374,12 +391,39 @@
       body {
         /* iOS Safari specific background */
         background-attachment: scroll;
+        /* Ensure background extends to home indicator */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
       }
       
       .container {
         /* Ensure proper rendering on iOS */
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
+      }
+
+      /* iOS Home Indicator Area */
+      html, body {
+        /* Prevent white background in home indicator area */
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background-attachment: fixed;
+      }
+    }
+
+    /* Additional iOS Home Indicator Support */
+    @media screen and (max-width: 768px) {
+      /* Ensure the gradient extends to the very bottom */
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: env(safe-area-inset-bottom);
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        z-index: -1;
+        pointer-events: none;
       }
     }
   </style>

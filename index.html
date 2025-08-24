@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProFinance CRM - Gestión Financiera Profesional</title>
+  
+  <!-- iOS Status Bar Configuration -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="msapplication-navbutton-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-title" content="ProFinance CRM">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-chart-line"></i>
+        <span>ProFinance CRM</span>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link active">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="capital.html" class="nav-link">
+          <i class="fas fa-coins"></i>
+          <span>Capital</span>
+        </a>
+        <a href="inversiones.html" class="nav-link">
+          <i class="fas fa-chart-bar"></i>
+          <span>Inversiones</span>
+        </a>
+        <a href="deudas.html" class="nav-link">
+          <i class="fas fa-credit-card"></i>
+          <span>Deudas</span>
+        </a>
+        <a href="gastos.html" class="nav-link">
+          <i class="fas fa-receipt"></i>
+          <span>Gastos</span>
+        </a>
+      </div>
+      <div class="nav-profile">
+        <div class="profile-info">
+          <span class="profile-name">Usuario</span>
+          <span class="profile-role">Administrador</span>
+        </div>
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <div class="page-header">
+        <div class="header-content">
+          <h1>Dashboard Financiero</h1>
+          <p>Visión general de tu situación financiera</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+            Actualizar
+          </button>
+          <button class="btn btn-secondary" id="export-btn">
+            <i class="fas fa-download"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="connection-status" id="connection-status">
+        <div class="status-indicator">
+          <i class="fas fa-circle"></i>
+          <span id="status-text">Conectando...</span>
+        </div>
+      </div>
+
+      <!-- Financial Overview Cards -->
+      <div class="overview-grid">
+        <div class="overview-card primary">
+          <div class="card-icon">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <div class="card-content">
+            <h3>Capital Total</h3>
+            <div class="card-value" id="total-capital">₲0</div>
+            <div class="card-change positive" id="capital-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card success">
+          <div class="card-icon">
+            <i class="fas fa-money-bill-wave"></i>
+          </div>
+          <div class="card-content">
+            <h3>Dinero Líquido</h3>
+            <div class="card-value" id="liquid-money">₲0</div>
+            <div class="card-change positive" id="liquid-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card info">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="card-content">
+            <h3>Inversiones</h3>
+            <div class="card-value" id="total-investments">₲0</div>
+            <div class="card-change positive" id="investments-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card warning">
+          <div class="card-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="card-content">
+            <h3>Deudas</h3>
+            <div class="card-value" id="total-debts">₲0</div>
+            <div class="card-change negative" id="debts-change">
+              <i class="fas fa-arrow-down"></i>
+              <span>-0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>Distribución de Capital</h3>
+            <div class="chart-actions">
+              <button class="btn-icon" id="pie-chart-btn" title="Gráfico Circular">
+                <i class="fas fa-chart-pie"></i>
+              </button>
+              <button class="btn-icon" id="bar-chart-btn" title="Gráfico de Barras">
+                <i class="fas fa-chart-bar"></i>
+              </button>
+            </div>
+          </div>
+          <div class="chart-content">
+            <canvas id="capital-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>Flujo de Efectivo</h3>
+            <div class="chart-actions">
+              <select id="cashflow-period" class="select-period">
+                <option value="7">Últimos 7 días</option>
+                <option value="30" selected>Últimos 30 días</option>
+                <option value="90">Últimos 90 días</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-content">
+            <canvas id="cashflow-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="activity-section">
+        <div class="section-header">
+          <h3>Actividad Reciente</h3>
+          <a href="gastos.html" class="btn-link">Ver todo</a>
+        </div>
+        <div class="activity-list" id="recent-activity">
+          <!-- Activity items will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="section-header">
+          <h3>Acciones Rápidas</h3>
+        </div>
+        <div class="actions-grid">
+          <button class="action-card" onclick="location.href='capital.html'">
+            <i class="fas fa-plus-circle"></i>
+            <span>Agregar Capital</span>
+          </button>
+          <button class="action-card" onclick="location.href='inversiones.html'">
+            <i class="fas fa-chart-line"></i>
+            <span>Nueva Inversión</span>
+          </button>
+          <button class="action-card" onclick="location.href='deudas.html'">
+            <i class="fas fa-credit-card"></i>
+            <span>Registrar Deuda</span>
+          </button>
+          <button class="action-card" onclick="location.href='gastos.html'">
+            <i class="fas fa-receipt"></i>
+            <span>Agregar Gasto</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
+

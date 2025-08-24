@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Capital - ProFinance CRM</title>
+  
+  <!-- iOS Status Bar Configuration -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="msapplication-navbutton-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-title" content="ProFinance CRM">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-chart-line"></i>
+        <span>ProFinance CRM</span>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="capital.html" class="nav-link active">
+          <i class="fas fa-coins"></i>
+          <span>Capital</span>
+        </a>
+        <a href="inversiones.html" class="nav-link">
+          <i class="fas fa-chart-bar"></i>
+          <span>Inversiones</span>
+        </a>
+        <a href="deudas.html" class="nav-link">
+          <i class="fas fa-credit-card"></i>
+          <span>Deudas</span>
+        </a>
+        <a href="gastos.html" class="nav-link">
+          <i class="fas fa-receipt"></i>
+          <span>Gastos</span>
+        </a>
+      </div>
+      <div class="nav-profile">
+        <div class="profile-info">
+          <span class="profile-name">Usuario</span>
+          <span class="profile-role">Administrador</span>
+        </div>
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <div class="page-header">
+        <div class="header-content">
+          <h1>Gestión de Capital</h1>
+          <p>Administra tu dinero líquido, ingresos y movimientos de capital</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="add-capital-btn">
+            <i class="fas fa-plus"></i>
+            Agregar Movimiento
+          </button>
+          <button class="btn btn-secondary" id="export-capital-btn">
+            <i class="fas fa-download"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="connection-status" id="connection-status">
+        <div class="status-indicator">
+          <i class="fas fa-circle"></i>
+          <span id="status-text">Conectando...</span>
+        </div>
+      </div>
+
+      <!-- Capital Overview -->
+      <div class="overview-grid">
+        <div class="overview-card success">
+          <div class="card-icon">
+            <i class="fas fa-money-bill-wave"></i>
+          </div>
+          <div class="card-content">
+            <h3>Dinero Líquido</h3>
+            <div class="card-value" id="liquid-money">₲0</div>
+            <div class="card-change positive" id="liquid-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card primary">
+          <div class="card-icon">
+            <i class="fas fa-arrow-up"></i>
+          </div>
+          <div class="card-content">
+            <h3>Ingresos del Mes</h3>
+            <div class="card-value" id="monthly-income">₲0</div>
+            <div class="card-change positive" id="income-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card warning">
+          <div class="card-icon">
+            <i class="fas fa-arrow-down"></i>
+          </div>
+          <div class="card-content">
+            <h3>Gastos del Mes</h3>
+            <div class="card-value" id="monthly-expenses">₲0</div>
+            <div class="card-change negative" id="expenses-change">
+              <i class="fas fa-arrow-down"></i>
+              <span>-0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card info">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="card-content">
+            <h3>Balance Neto</h3>
+            <div class="card-value" id="net-balance">₲0</div>
+            <div class="card-change positive" id="balance-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capital Table -->
+      <div class="table-container">
+        <div class="card-header">
+          <div class="card-title">Movimientos de Capital</div>
+          <div class="card-actions">
+            <div class="search-box">
+              <input type="text" id="search-capital" class="form-input" placeholder="Buscar movimientos...">
+              <i class="fas fa-search"></i>
+            </div>
+            <select id="filter-type" class="form-select">
+              <option value="">Todos los tipos</option>
+              <option value="Ingreso">Ingresos</option>
+              <option value="Gasto">Gastos</option>
+              <option value="Transferencia">Transferencias</option>
+            </select>
+            <button class="btn btn-icon" id="refresh-capital-btn" title="Actualizar">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table" id="capital-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Monto</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="capital-tbody">
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Capital Modal -->
+  <div class="modal-backdrop" id="add-capital-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Agregar Movimiento de Capital</h3>
+        <button class="modal-close" id="close-capital-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="capital-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-input" id="capital-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo</label>
+              <select class="form-select" id="capital-type" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Gasto">Gasto</option>
+                <option value="Transferencia">Transferencia</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-input" id="capital-description" placeholder="Descripción del movimiento" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Categoría</label>
+              <select class="form-select" id="capital-category" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="Salario">Salario</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Inversiones">Inversiones</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Servicios">Servicios</option>
+                <option value="Entretenimiento">Entretenimiento</option>
+                <option value="Otros">Otros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Monto (₲)</label>
+              <input type="number" class="form-input" id="capital-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="capital-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-capital-btn">Cancelar</button>
+        <button class="btn btn-primary" id="save-capital-btn">
+          <i class="fas fa-save"></i>
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Capital Modal -->
+  <div class="modal-backdrop" id="edit-capital-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar Movimiento de Capital</h3>
+        <button class="modal-close" id="close-edit-capital-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-capital-form">
+          <input type="hidden" id="edit-capital-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-input" id="edit-capital-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo</label>
+              <select class="form-select" id="edit-capital-type" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Gasto">Gasto</option>
+                <option value="Transferencia">Transferencia</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-input" id="edit-capital-description" placeholder="Descripción del movimiento" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Categoría</label>
+              <select class="form-select" id="edit-capital-category" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="Salario">Salario</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Inversiones">Inversiones</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Servicios">Servicios</option>
+                <option value="Entretenimiento">Entretenimiento</option>
+                <option value="Otros">Otros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Monto (₲)</label>
+              <input type="number" class="form-input" id="edit-capital-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="edit-capital-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-edit-capital-btn">Cancelar</button>
+        <button class="btn btn-primary" id="update-capital-btn">
+          <i class="fas fa-save"></i>
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/capital.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Deudas - ProFinance CRM</title>
+  
+  <!-- iOS Status Bar Configuration -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="msapplication-navbutton-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-title" content="ProFinance CRM">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-chart-line"></i>
+        <span>ProFinance CRM</span>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="capital.html" class="nav-link">
+          <i class="fas fa-coins"></i>
+          <span>Capital</span>
+        </a>
+        <a href="inversiones.html" class="nav-link">
+          <i class="fas fa-chart-bar"></i>
+          <span>Inversiones</span>
+        </a>
+        <a href="deudas.html" class="nav-link active">
+          <i class="fas fa-credit-card"></i>
+          <span>Deudas</span>
+        </a>
+        <a href="gastos.html" class="nav-link">
+          <i class="fas fa-receipt"></i>
+          <span>Gastos</span>
+        </a>
+      </div>
+      <div class="nav-profile">
+        <div class="profile-info">
+          <span class="profile-name">Usuario</span>
+          <span class="profile-role">Administrador</span>
+        </div>
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <div class="page-header">
+        <div class="header-content">
+          <h1>Gestión de Deudas</h1>
+          <p>Administra y controla tus deudas y obligaciones financieras</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="add-debt-btn">
+            <i class="fas fa-plus"></i>
+            Registrar Deuda
+          </button>
+          <button class="btn btn-secondary" id="export-debts-btn">
+            <i class="fas fa-download"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="connection-status" id="connection-status">
+        <div class="status-indicator">
+          <i class="fas fa-circle"></i>
+          <span id="status-text">Conectando...</span>
+        </div>
+      </div>
+
+      <!-- Debts Overview -->
+      <div class="overview-grid">
+        <div class="overview-card warning">
+          <div class="card-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="card-content">
+            <h3>Total de Deudas</h3>
+            <div class="card-value" id="total-debts">₲0</div>
+            <div class="card-change negative" id="debts-change">
+              <i class="fas fa-arrow-down"></i>
+              <span>-0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card danger">
+          <div class="card-icon">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <div class="card-content">
+            <h3>Interés Promedio</h3>
+            <div class="card-value" id="avg-interest">0%</div>
+            <div class="card-change negative" id="interest-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card info">
+          <div class="card-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <div class="card-content">
+            <h3>Próximo Vencimiento</h3>
+            <div class="card-value" id="next-due">₲0</div>
+            <div class="card-change negative" id="due-change">
+              <i class="fas fa-clock"></i>
+              <span>En 0 días</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card success">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="card-content">
+            <h3>Progreso de Pago</h3>
+            <div class="card-value" id="payment-progress">0%</div>
+            <div class="card-change positive" id="progress-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Debts Table -->
+      <div class="table-container">
+        <div class="card-header">
+          <div class="card-title">Lista de Deudas</div>
+          <div class="card-actions">
+            <div class="search-box">
+              <input type="text" id="search-debts" class="form-input" placeholder="Buscar deudas...">
+              <i class="fas fa-search"></i>
+            </div>
+            <select id="filter-category" class="form-select">
+              <option value="">Todas las entidades</option>
+              <!-- Las opciones se cargarán dinámicamente -->
+            </select>
+            <button class="btn btn-icon" id="refresh-debts-btn" title="Actualizar">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table" id="debts-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Entidad</th>
+                <th>Monto</th>
+                <th>Saldo Actual</th>
+                <th>Pagado</th>
+                <th>Interés</th>
+                <th>Vencimiento</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="debts-tbody">
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Debt Modal -->
+  <div class="modal-backdrop" id="add-debt-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Registrar Nueva Deuda</h3>
+        <button class="modal-close" id="close-debt-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="debt-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-input" id="debt-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hora</label>
+              <input type="time" class="form-input" id="debt-time" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Entidad</label>
+            <input type="text" class="form-input" id="debt-entity" placeholder="Nombre de la entidad o persona" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Monto Original (₲)</label>
+              <input type="number" class="form-input" id="debt-original-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Saldo Actual (₲)</label>
+              <input type="number" class="form-input" id="debt-current-balance" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Tasa de Interés (%)</label>
+              <input type="number" class="form-input" id="debt-interest-rate" placeholder="0" min="0" step="0.1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fecha de Vencimiento</label>
+              <input type="date" class="form-input" id="debt-due-date" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="debt-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-debt-btn">Cancelar</button>
+        <button class="btn btn-primary" id="save-debt-btn">
+          <i class="fas fa-save"></i>
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Debt Modal -->
+  <div class="modal-backdrop" id="edit-debt-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar Deuda</h3>
+        <button class="modal-close" id="close-edit-debt-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-debt-form">
+          <input type="hidden" id="edit-debt-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-input" id="edit-debt-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hora</label>
+              <input type="time" class="form-input" id="edit-debt-time" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Entidad</label>
+            <input type="text" class="form-input" id="edit-debt-entity" placeholder="Nombre de la entidad o persona" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Monto Original (₲)</label>
+              <input type="number" class="form-input" id="edit-debt-original-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Saldo Actual (₲)</label>
+              <input type="number" class="form-input" id="edit-debt-current-balance" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Tasa de Interés (%)</label>
+              <input type="number" class="form-input" id="edit-debt-interest-rate" placeholder="0" min="0" step="0.1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fecha de Vencimiento</label>
+              <input type="date" class="form-input" id="edit-debt-due-date" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="edit-debt-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-edit-debt-btn">Cancelar</button>
+        <button class="btn btn-primary" id="update-debt-btn">
+          <i class="fas fa-save"></i>
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/debts.js"></script>
+</body>
+</html>

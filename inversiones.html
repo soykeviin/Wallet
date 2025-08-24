@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Inversiones - ProFinance CRM</title>
+  
+  <!-- iOS Status Bar Configuration -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="msapplication-navbutton-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-title" content="ProFinance CRM">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-chart-line"></i>
+        <span>ProFinance CRM</span>
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="capital.html" class="nav-link">
+          <i class="fas fa-coins"></i>
+          <span>Capital</span>
+        </a>
+        <a href="inversiones.html" class="nav-link active">
+          <i class="fas fa-chart-bar"></i>
+          <span>Inversiones</span>
+        </a>
+        <a href="deudas.html" class="nav-link">
+          <i class="fas fa-credit-card"></i>
+          <span>Deudas</span>
+        </a>
+        <a href="gastos.html" class="nav-link">
+          <i class="fas fa-receipt"></i>
+          <span>Gastos</span>
+        </a>
+      </div>
+      <div class="nav-profile">
+        <div class="profile-info">
+          <span class="profile-name">Usuario</span>
+          <span class="profile-role">Administrador</span>
+        </div>
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <div class="page-header">
+        <div class="header-content">
+          <h1>Gestión de Inversiones</h1>
+          <p>Administra y analiza tu portafolio de inversiones</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="add-investment-btn">
+            <i class="fas fa-plus"></i>
+            Nueva Inversión
+          </button>
+          <button class="btn btn-secondary" id="export-investments-btn">
+            <i class="fas fa-download"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="connection-status" id="connection-status">
+        <div class="status-indicator">
+          <i class="fas fa-circle"></i>
+          <span id="status-text">Conectando...</span>
+        </div>
+      </div>
+
+      <!-- Investments Overview -->
+      <div class="overview-grid">
+        <div class="overview-card info">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="card-content">
+            <h3>Valor Total</h3>
+            <div class="card-value" id="total-value">₲0</div>
+            <div class="card-change positive" id="total-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card success">
+          <div class="card-icon">
+            <i class="fas fa-arrow-up"></i>
+          </div>
+          <div class="card-content">
+            <h3>Rendimiento</h3>
+            <div class="card-value" id="total-return">₲0</div>
+            <div class="card-change positive" id="return-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card primary">
+          <div class="card-icon">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <div class="card-content">
+            <h3>ROI Promedio</h3>
+            <div class="card-value" id="avg-roi">0%</div>
+            <div class="card-change positive" id="roi-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-card warning">
+          <div class="card-icon">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+          <div class="card-content">
+            <h3>Diversificación</h3>
+            <div class="card-value" id="diversification">0</div>
+            <div class="card-change positive" id="diversification-change">
+              <i class="fas fa-arrow-up"></i>
+              <span>Activos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Investments Table -->
+      <div class="table-container">
+        <div class="card-header">
+          <div class="card-title">Portafolio de Inversiones</div>
+          <div class="card-actions">
+            <div class="search-box">
+              <input type="text" id="search-investments" class="form-input" placeholder="Buscar inversiones...">
+              <i class="fas fa-search"></i>
+            </div>
+            <select id="filter-category" class="form-select">
+              <option value="">Todas las categorías</option>
+              <option value="Acciones">Acciones</option>
+              <option value="Bonos">Bonos</option>
+              <option value="Fondos Mutuos">Fondos Mutuos</option>
+              <option value="Criptomonedas">Criptomonedas</option>
+              <option value="Bienes Raíces">Bienes Raíces</option>
+              <option value="Oro">Oro</option>
+              <option value="Plata">Plata</option>
+              <option value="Otros">Otros</option>
+            </select>
+            <button class="btn btn-icon" id="refresh-investments-btn" title="Actualizar">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table" id="investments-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Monto Inicial</th>
+                <th>Valor Actual</th>
+                <th>Rendimiento</th>
+                <th>ROI</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="investments-tbody">
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Investment Modal -->
+  <div class="modal-backdrop" id="add-investment-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Nueva Inversión</h3>
+        <button class="modal-close" id="close-investment-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="investment-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha de Inversión</label>
+              <input type="date" class="form-input" id="investment-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo de Inversión</label>
+              <select class="form-select" id="investment-type" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="Acciones">Acciones</option>
+                <option value="Bonos">Bonos</option>
+                <option value="Fondos Mutuos">Fondos Mutuos</option>
+                <option value="Criptomonedas">Criptomonedas</option>
+                <option value="Bienes Raíces">Bienes Raíces</option>
+                <option value="Oro">Oro</option>
+                <option value="Plata">Plata</option>
+                <option value="Otros">Otros</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-input" id="investment-description" placeholder="Descripción de la inversión" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Monto Inicial (₲)</label>
+              <input type="number" class="form-input" id="investment-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Valor Actual (₲)</label>
+              <input type="number" class="form-input" id="investment-current-value" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="investment-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-investment-btn">Cancelar</button>
+        <button class="btn btn-primary" id="save-investment-btn">
+          <i class="fas fa-save"></i>
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Investment Modal -->
+  <div class="modal-backdrop" id="edit-investment-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Editar Inversión</h3>
+        <button class="modal-close" id="close-edit-investment-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-investment-form">
+          <input type="hidden" id="edit-investment-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Fecha de Inversión</label>
+              <input type="date" class="form-input" id="edit-investment-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo de Inversión</label>
+              <select class="form-select" id="edit-investment-type" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="Acciones">Acciones</option>
+                <option value="Bonos">Bonos</option>
+                <option value="Fondos Mutuos">Fondos Mutuos</option>
+                <option value="Criptomonedas">Criptomonedas</option>
+                <option value="Bienes Raíces">Bienes Raíces</option>
+                <option value="Oro">Oro</option>
+                <option value="Plata">Plata</option>
+                <option value="Otros">Otros</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-input" id="edit-investment-description" placeholder="Descripción de la inversión" required>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Monto Inicial (₲)</label>
+              <input type="number" class="form-input" id="edit-investment-amount" placeholder="0" min="0" step="1000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Valor Actual (₲)</label>
+              <input type="number" class="form-input" id="edit-investment-current-value" placeholder="0" min="0" step="1000" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Notas (opcional)</label>
+            <textarea class="form-textarea" id="edit-investment-notes" placeholder="Notas adicionales..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-edit-investment-btn">Cancelar</button>
+        <button class="btn btn-primary" id="update-investment-btn">
+          <i class="fas fa-save"></i>
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/investments.js"></script>
+</body>
+</html>
